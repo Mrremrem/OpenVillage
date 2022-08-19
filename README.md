@@ -1,5 +1,6 @@
 # OpenVillage
 A village game thing
+![Github intro image thingy](/Assets/Media/Github_Intro_Image.png)
 
 # Intro
 Hey thanks for stopping by! So I made a simple, open tile game that features a lot of flowers (a grand total of three at the moment). You can move around the world that exists far from the vast oceans and explore all sorts of grass and colorful flowers that stand for nature. Oh and you can also make your own world if you want to take control environmentally/politically (currently in a text file, check out Assets/Media/Maps for an example). So you can see that this project is not just an ordinary project--it is unique in both creativity from me and (in the near, near future) you. Please watch your step as I take you to the compiling section.
