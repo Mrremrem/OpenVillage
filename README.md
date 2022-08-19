@@ -7,10 +7,10 @@ Hey thanks for stopping by! So I made a simple, open tile game that features a l
 # Compiling
 ## Compile in Linux
 ### That's right, [Richard](https://old.reddit.com/r/copypasta/comments/7lt7i0/no_richard_its_linux_not_gnulinux/), I said Linux.
-### Anyway, to compile this for the distro you're using, you're gonna want to get these packages from whichever [package manager](https://en.wikipedia.org/wiki/Package_manager) you're using <br />
-[CMake](https://cmake.org/) (For my organization skills. Highly recommend using the GUI version even if you're a [wm](https://en.wikipedia.org/wiki/Window_manager) user like *moi*)<br />
-[SFML](https://www.sfml-dev.org/) (For the graphics)<br />
-And your favorite C++ compiler ([I'm using Clang++](https://clang.llvm.org/))<br />
+Anyway, to compile this for the distro you're using, you're gonna want to get these packages from whichever [package manager](https://en.wikipedia.org/wiki/Package_manager) you're using <br />
+* [CMake](https://cmake.org/) (For my organization skills. Highly recommend using the GUI version even if you're a [wm](https://en.wikipedia.org/wiki/Window_manager) user like *moi*)<br />
+* [SFML](https://www.sfml-dev.org/) (For the graphics)<br />
+* And your favorite C++ compiler ([I'm using Clang++](https://clang.llvm.org/))<br />
 Then you'd want to use CMake to, well, do the magic (iirc that's all you have to do after you get everything above configured correctly)<br />
 Please send me any error logs. I don't have another machine to test this yet! Best wishes <3
 ## Compiling for Windows/Mac users
