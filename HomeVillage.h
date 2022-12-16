@@ -51,7 +51,6 @@ private:
     sf::Vector2u windowSize;
 
     void setTile(int id);
-    bool isCameraAtBounds(sf::View camera, Direction direction);
 
     TextBox textbox;
     bool isEnterPressed;

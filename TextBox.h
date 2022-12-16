@@ -9,6 +9,7 @@
 #include <cstring>
 #include <vector>
 #include <map>
+#include "FontContainer.h"
 
 class TextBox {
 public:
@@ -55,8 +56,7 @@ private:
     float outlineThickness; // Outline girth
 
     // Font containers
-    std::map<std::string, sf::Font> fonts;
-    std::string currentFont;
+    FontContainer fontList;
     sf::Text content;
     sf::Color fontColor;
 
@@ -78,8 +78,8 @@ private:
     int getMaxCharsPerLine(); // Gets max characters that fit in textbox
     int getMaxLinesPerPage(); // Gets max lines that fit in textbox
 
-    // Separates text to fit in textbox
-    void addLines(std::string& text); // Adds lines based on text length
+    // Newlines text (adds \n's, I'm using newline as a verb)
+    void newlineText(std::string& text); // Adds lines based on text length
     void addPages(std::string& text, int totalPages); // Adds pages based on text length
 };
 

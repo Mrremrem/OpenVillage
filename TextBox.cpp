@@ -4,7 +4,8 @@
 
 #include "TextBox.h"
 
-TextBox::TextBox() {
+TextBox::TextBox():
+fontList() {
     // Sets up backdrop with default arguments
     const float DEFAULT_THICKNESS = 6.f;
     const sf::Vector2f DEFAULT_POSITION = sf::Vector2f(1000, 1000);
@@ -16,27 +17,36 @@ TextBox::TextBox() {
     backdropColor = LIGHT_BROWN;
     outlineColor = DARK_BROWN;
     outlineThickness = DEFAULT_THICKNESS;
+
+    fontList.addFont("NovaSquare", "/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/Assets/Fonts/NovaSquare-Regular.ttf");
+    fontList.addFont("DynaPuff", "/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/Assets/Fonts/DynaPuff-VariableFont_wdth,wght.ttf");
+    fontList.addFont("DancingScript", "/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/Assets/Fonts/DancingScript-VariableFont_wght.ttf");
 }
 
 TextBox::~TextBox() {
     // Empty
 }
 
-void TextBox::addText(std::string text){
+// Remind me why this was needed . _.
+/*
+ * So this is what I'm gonna organize
+ * addText just adds text to 
+ */
+/*void TextBox::addText(std::string text){
     // Adds newlines for every line
     numOfLines = text.size() / getMaxCharsPerLine();
-    addLines(text);
+    newlineText(text);
 
     // Adds pages for every nth lines that exceeds max # of lines
     int totalPages = numOfLines / getMaxLinesPerPage() + 1 + numOfPages;
     addPages(text, totalPages);
     numOfPages += totalPages;
 
-} // Also make add page
+} // Also make add page*/
 
 void TextBox::addPage(std::string text) {
     numOfLines = text.size() / getMaxCharsPerLine();
-    addLines(text);
+    newlineText(text);
 
     // Adds pages for every nth lines that exceeds max # of lines
     int totalPages = 1;
@@ -44,19 +54,40 @@ void TextBox::addPage(std::string text) {
     numOfPages += totalPages;
 }
 
-void TextBox::addFont(std::string name, std::string directory) {
-    sf::Font font;
+void TextBox::addPages(std::string& text, int totalPages) {
+    //numOfLines = text.size() / getMaxCharsPerLine();
+    //numOfPages = numOfLines / getMaxLines() + 1;
+    // Places each paragraph into pages
+    for (int pageIndex = 0; pageIndex < totalPages; pageIndex++){
+        int minSubstring = getMaxCharsPerLine() * getMaxLinesPerPage() * pageIndex;
+        int maxSubstring = getMaxCharsPerLine() * getMaxLinesPerPage();
 
-    if (!font.loadFromFile(directory)) {
-        std::runtime_error("Error: font " + directory + " could not be found/invalid font");
+        /* String concatination in C++ is O(1)(maybe?)
+         * ^ according to the few stackoverflow sources
+         * I briefly looked over (if so wow!)
+         * So theoretically this should be okay
+         * But lmk if I'm making this O(N^2) (to
+         * the CS majors who are reading me, hi)
+        */
+        std::string pageText = text.substr(minSubstring, maxSubstring);
+        pages.push_back(pageText);
     }
+}
 
-    fonts[name] = font;
+void TextBox::newlineText(std::string& text) {
+    // Adds \n for every line
+    for (int lineIndex = 1; lineIndex <= numOfLines; lineIndex++){
+        // Checks if max lines have been reached (from page)
+        if (lineIndex % getMaxLinesPerPage() != 0){
+            int newlinePos = lineIndex * getMaxCharsPerLine();
+            text.insert(newlinePos, "\n");
+        }
+    }
 }
 
 void TextBox::setFont(std::string name) {
-    currentFont = name;
-    content.setFont(fonts.at(name));
+    sf::Font* currentFont = fontList.getFont(name);
+    content.setFont(*currentFont);
 }
 
 // DELETE THIS
@@ -115,10 +146,6 @@ int TextBox::getPageNumber() {
     return currentPage;
 }
 
-std::string TextBox::getFont() {
-    return currentFont;
-}
-
 sf::Vector2f TextBox::getPosition() {
     return position;
 }
@@ -173,7 +200,7 @@ void TextBox::updateText() {
     const int SPACE_FROM_HEIGHT = 10;
     content.setPosition(position.x + SPACE_FROM_WIDTH, position.y + SPACE_FROM_HEIGHT);
     content.setCharacterSize(DEFAULT_CHARACTER_SIZE);
-    content.setColor(sf::Color::Black);
+    content.setFillColor(sf::Color::Black);
 }
 
 int TextBox::getMaxCharsPerLine() {
@@ -200,28 +227,4 @@ int TextBox::getMaxLinesPerPage() {
     const int REFERENCE_HEIGHT = 250;
 
     return REFERENCE_NUM_OF_LINES * size.y / REFERENCE_HEIGHT;
-}
-
-void TextBox::addLines(std::string& text) {
-    // Adds \n for every line
-    for (int lineIndex = 1; lineIndex <= numOfLines; lineIndex++){
-        // Checks if max lines have been reached (from page)
-        if (lineIndex % getMaxLinesPerPage() != 0){
-            int newlinePos = lineIndex * getMaxCharsPerLine();
-            text.insert(newlinePos, "\n");
-        }
-    }
-}
-
-void TextBox::addPages(std::string& text, int totalPages) {
-    //numOfLines = text.size() / getMaxCharsPerLine();
-    //numOfPages = numOfLines / getMaxLines() + 1;
-    // Places each paragraph into pages
-    for (int pageIndex = 0; pageIndex < totalPages; pageIndex++){
-        int minSubstring = getMaxCharsPerLine() * getMaxLinesPerPage() * pageIndex;
-        int maxSubstring = getMaxCharsPerLine() * getMaxLinesPerPage();
-
-        std::string pageText = text.substr(minSubstring, maxSubstring);
-        pages.push_back(pageText);
-    }
 }

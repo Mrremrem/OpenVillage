@@ -3,6 +3,7 @@
 //
 
 #include "GameManager.h"
+#include <iostream>
 
 GameManager::GameManager():
         window("Open Village", sf::Vector2u(1920, 1080)),
@@ -20,6 +21,7 @@ GameManager::GameManager():
     playerDebug.add("Loading...");
     playerDebug.add("Loading...");
     playerDebug.add("Loading...");
+    std::cout << "DEBUG: size() of playerDebug: " << playerDebug.numOfMessages() << std::endl;
 }
 
 GameManager::~GameManager() {
@@ -86,7 +88,7 @@ void GameManager::update() {
 void GameManager::updatePlayerDebug() {
     // Setting player info on top left corner
     sf::Vector2f topLeftView = window.getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0));
-    playerDebug.setPosition(topLeftView);
+    //playerDebug.setPosition(topLeftView);
 
     // Displaying player x & y coords from screen
     sf::Vector2f playerCoords = redMan.getPosition();

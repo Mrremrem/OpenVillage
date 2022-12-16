@@ -27,8 +27,7 @@ int HomeVillage::getBlockSize() {
 }
 
 void HomeVillage::update(sf::RenderWindow& window, Player &player) {
-    if (player.getDirection() != Direction::None
-        && !isCameraAtBounds(player.getCameraView(), player.getDirection())){
+    if (player.getDirection() != Direction::None){
         player.move();
     }
 
@@ -58,14 +57,6 @@ void HomeVillage::render(sf::RenderWindow &window) {
 void HomeVillage::setTile(int id) {
     int textureLocation = id * SPRITE_SIZE; // Gets texture location
     tileSprite.setTextureRect(sf::IntRect(textureLocation, 0, SPRITE_SIZE, SPRITE_SIZE));
-}
-
-bool HomeVillage::isCameraAtBounds(sf::View view, Direction direction) {
-    const int TWO = 2;
-    sf::Vector2f minView(windowSize.x / TWO, windowSize.y / TWO);
-
-    return view.getCenter().x <= minView.x && direction == Direction::Left
-        || view.getCenter().y <= minView.y && direction == Direction::Up;
 }
 
 void HomeVillage::updateTextbox(sf::RenderWindow& window) {
@@ -113,16 +104,19 @@ void HomeVillage::updateTextboxArea(sf::RenderWindow& window) {
 }
 
 void HomeVillage::updateTextboxFont() {
-    if (textbox.getPageNumber() >= 9
-                                    && textbox.getPageNumber() <= 10) {
+    if (textbox.getPageNumber() >= 9 && textbox.getPageNumber() <= 10) {
         textbox.setFont("DynaPuff");
     } else {
-        textbox.setFont("NovaSquare");
+        textbox.setFont("DynaPuff");
     }
 }
 
 void HomeVillage::setupTextbox() {
-    textbox.addText("Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+    //textbox.addText("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+    //                "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+    textbox.addPage("lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+                    "lllllllllllllllllllllllllllllllllllll");
+    textbox.addPage("Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
                     " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                     " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
                     " nisi ut aliquip ex ea commodo consequat.");
@@ -138,7 +132,7 @@ void HomeVillage::setupTextbox() {
                     " Now that I think of it, that fairy that flew next to    that green"
                     " warrior spoke to me once...");
     textbox.addPage("The fairy said something about \"Hey listen!\" and"
-                    " how Hyrule   was falling apart and how it needed my help to save"
+                    " how Hyrule   was falling apart and how it nee d my help to save"
                     " a chick  named Zoolda.");
     textbox.addPage("My mind went away after that.");
     textbox.addPage("You know, it's been pretty windy since this large ocean of    water"
@@ -153,9 +147,6 @@ void HomeVillage::setupTextbox() {
     textbox.addPage("And that's how I met your mother!");
     textbox.addPage("...");
     textbox.addPage("I wonder if I was made by nature or a creator...");
-    textbox.addFont("NovaSquare", "Assets/Fonts/NovaSquare-Regular.ttf");
-    textbox.addFont("DynaPuff", "Assets/Fonts/DynaPuff-VariableFont_wdth,wght.ttf");
-    textbox.addFont("DancingScript", "Assets/Fonts/DancingScript-VariableFont_wght.ttf");
-    textbox.setFont("NovaSquare");
+    textbox.setFont("DynaPuff");
     //textbox.addText(test1);
 }

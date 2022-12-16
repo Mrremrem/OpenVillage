@@ -10,8 +10,7 @@
 #include <vector>
 #include "Player.h"
 #include "WindowManager.h"
-
-using DebugContainer = std::vector<std::string>;
+#include "FontContainer.h"
 
 class DebugLog {
 public:
@@ -22,20 +21,23 @@ public:
     void setPosition(sf::Vector2f position);
     void insert(int messageIndex, std::string message);
 
+    int numOfMessages();
+
     void render(sf::RenderWindow& window);
 private:
-    sf::Font font;
-    const std::string FONT_DIRECTORY = "Assets/Fonts/Ubuntu-Regular.ttf";
+    // Delete this later and add to FontContainer: const std::string FONT_DIRECTORY = "";
     sf::Text content;
+    FontContainer fontList;
 
-    DebugContainer messages; // Holds debug info
+    std::vector<std::string> messages; // Holds debug info
+    int size = 0;
     sf::Vector2f position;
 
     const sf::Color TEXT_COLOR = sf::Color::White;
     const int DEFAULT_CHARACTER_SIZE = 30;
     const int DEFAULT_SPACING = 30; // Enter spacing (\n ish)
 
-    sf::RenderWindow* window;
+    //sf::RenderWindow* window;
 };
 
 
