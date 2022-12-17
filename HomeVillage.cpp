@@ -78,7 +78,7 @@ void HomeVillage::updateTextboxControls(sf::RenderWindow& window) {
                     textbox.setPageNumber(0);
                     textbox.setVisibility(true);
                     break;
-                case sf::Keyboard::Enter:
+                case sf::Keyboard::Return:
                     textbox.next();
                     break;
                 case sf::Keyboard::Space:
