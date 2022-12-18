@@ -18,9 +18,9 @@ fontList() {
     outlineColor = DARK_BROWN;
     outlineThickness = DEFAULT_THICKNESS;
 
-    fontList.addFont("NovaSquare", "/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/Assets/Fonts/NovaSquare-Regular.ttf");
-    fontList.addFont("DynaPuff", "/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/Assets/Fonts/DynaPuff-VariableFont_wdth,wght.ttf");
-    fontList.addFont("DancingScript", "/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/Assets/Fonts/DancingScript-VariableFont_wght.ttf");
+    fontList.addFont("NovaSquare", "Assets/Fonts/NovaSquare-Regular.ttf");
+    fontList.addFont("DynaPuff", "Assets/Fonts/DynaPuff-VariableFont_wdth,wght.ttf");
+    fontList.addFont("DancingScript", "Assets/Fonts/DancingScript-VariableFont_wght.ttf");
 }
 
 TextBox::~TextBox() {
@@ -171,18 +171,6 @@ void TextBox::render(sf::RenderWindow& window) {
     }
 
     window.draw(backdrop);
-
-    // Checks if there's at least one page
-    if (!pages.empty()) {
-        // Checks if more text should be shown
-        std::string text = pages.at(currentPage);
-        if (numOfTextDisplayed < text.size()) {
-            numOfTextDisplayed++;
-        }
-
-        // Sets text to be displayed
-        content.setString(text.substr(0, numOfTextDisplayed));
-    }
     window.draw(content);
 }
 
@@ -201,6 +189,18 @@ void TextBox::updateText() {
     content.setPosition(position.x + SPACE_FROM_WIDTH, position.y + SPACE_FROM_HEIGHT);
     content.setCharacterSize(DEFAULT_CHARACTER_SIZE);
     content.setFillColor(sf::Color::Black);
+
+    // Checks if there's at least one page
+    if (!pages.empty()) {
+        // Checks if more text should be shown
+        std::string text = pages.at(currentPage);
+        if (numOfTextDisplayed < text.size()) {
+            numOfTextDisplayed++;
+        }
+
+        // Sets text to be displayed
+        content.setString(text.substr(0, numOfTextDisplayed));
+    }
 }
 
 int TextBox::getMaxCharsPerLine() {

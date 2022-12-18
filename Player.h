@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Directions.h"
+#include "CollisionBox.h"
 
 /*
  * What?
@@ -15,7 +16,12 @@
 
 class Player {
 public:
-    Player(sf::Vector2f cameraSize, sf::Vector2f position, int spriteDistance); // Initializes player sprite
+    // Initializes player sprite
+    Player(sf::Vector2f cameraSize, sf::Vector2f position, int spriteDistance); 
+
+    void update(); // Updates collision box
+    void render(sf::RenderWindow& window); // Renders player to screen
+
 
     void setDirection(Direction direction); // Sets player direction
     void setPosition(sf::Vector2f position);
@@ -27,8 +33,6 @@ public:
     sf::View getCameraView();
 
     void move();
-
-    void render(sf::RenderWindow& window); // Renders player to screen
 
 private:
     std::string PLAYER_TEXTURE_DIRECTORY = "Assets/Media/Textures/Red_Man.png";
@@ -46,6 +50,10 @@ private:
     float cameraSpeed = 3;
 
     int spriteDistance;
+
+    CollisionBox hitBox;
+
+    void updateHitBox();
 };
 
 

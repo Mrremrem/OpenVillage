@@ -5,8 +5,7 @@
 #include "DebugLog.h"
 
 DebugLog::DebugLog() {
-    fontList.addFont("Ubuntu", "/home/mrremrem/CLionProjects/OpenVillage/"
-    "cmake-build-debug/Assets/Fonts/Ubuntu-Regular.ttf");
+    fontList.addFont("Ubuntu", "Assets/Fonts/Ubuntu-Regular.ttf");
 
     sf::Font* currentFont = fontList.getFont("Ubuntu");
     content.setFont(*currentFont);

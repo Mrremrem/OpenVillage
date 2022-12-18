@@ -20,6 +20,7 @@ public:
     void update(); // Updates position, colors, text, etc.
     void render(sf::RenderWindow& window); // Displays textbox
 
+
     void addText(std::string text); // Adds text to textbox
     void addPage(std::string text); // Adds text to new page
 

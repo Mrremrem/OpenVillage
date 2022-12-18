@@ -3,7 +3,6 @@
 //
 
 #include "GameManager.h"
-#include <iostream>
 
 GameManager::GameManager():
         window("Open Village", sf::Vector2u(1920, 1080)),
@@ -16,12 +15,6 @@ GameManager::GameManager():
     // Initializes player stats
     redMan.setSpeed(sf::Vector2f(DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_SPEED));
     redMan.setScale(sf::Vector2f(DEFAULT_PLAYER_SCALE, DEFAULT_PLAYER_SCALE));
-
-    playerDebug.add("Loading...");
-    playerDebug.add("Loading...");
-    playerDebug.add("Loading...");
-    playerDebug.add("Loading...");
-    std::cout << "DEBUG: size() of playerDebug: " << playerDebug.numOfMessages() << std::endl;
 }
 
 GameManager::~GameManager() {
@@ -75,6 +68,8 @@ void GameManager::update() {
     // Single frame
     float frameTime = 1.0f / MAX_FPS;
 
+    redMan.update();
+
     // Checks if time elapsed exceeds frame time
     if (elapsedTime.asSeconds() >= frameTime){
         homeVillage.update(*window.getRenderWindow(), redMan);
@@ -87,19 +82,22 @@ void GameManager::update() {
 
 void GameManager::updatePlayerDebug() {
     // Setting player info on top left corner
-    sf::Vector2f topLeftView = window.getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0));
-    //playerDebug.setPosition(topLeftView);
+    sf::Vector2f topLeftView = window.getRenderWindow()->
+    mapPixelToCoords(sf::Vector2i(0, 0));
+    playerDebug.setPosition(topLeftView);
 
     // Displaying player x & y coords from screen
     sf::Vector2f playerCoords = redMan.getPosition();
-    playerDebug.insert(0, "X: " + std::to_string(playerCoords.x));
-    playerDebug.insert(1, "Y: " + std::to_string(playerCoords.y));
+    playerDebug.insert(0, "Player X: " + 
+                        std::to_string(playerCoords.x));
+    playerDebug.insert(1, "Player Y: " + 
+                        std::to_string(playerCoords.y));
 
     // Displaying view's coordinates
-    playerDebug.insert(2, "Camera X: "
-                          + std::to_string(redMan.getCameraView().getCenter().x));
-    playerDebug.insert(3, "Camera Y: "
-                          + std::to_string(redMan.getCameraView().getCenter().y));
+    playerDebug.insert(2, "Camera X: " + 
+                        std::to_string(redMan.getCameraView().getCenter().x));
+    playerDebug.insert(3, "Camera Y: " + 
+                        std::to_string(redMan.getCameraView().getCenter().y));
 }
 
 // Leaving this here in case I need it

@@ -3,11 +3,14 @@
 //
 
 #include "Player.h"
+#include <SFML/System/Vector2.hpp>
+#include <cstddef>
 
 Player::Player(sf::Vector2f cameraSize, sf::Vector2f position, int spriteDistance):
     cameraSize(cameraSize),
     position(position),
-    spriteDistance(spriteDistance) {
+    spriteDistance(spriteDistance),
+    hitBox(false) {
     if (!texture.loadFromFile(PLAYER_TEXTURE_DIRECTORY)){
         throw std::runtime_error("Error: Could not find \'Red_Man.png\'");
     }
@@ -47,6 +50,11 @@ sf::View Player::getCameraView() {
     return camera;
 }
 
+/*
+ * Moves player (well, technically camera)
+ * Pre: none
+ * Post: moves player camera based on direction
+ */
 void Player::move() {
     // No point in moving if stationary
     if (direction == Direction::None){
@@ -70,14 +78,25 @@ void Player::move() {
 }
 
 /*
+ * Updates sprite
+ * Pre: none
+ * Post: Collision box position updated
+ */
+void Player::update() {
+    sprite.setPosition(position);
+    sprite.setScale(scale);
+    sf::Vector2f size(sprite.getTextureRect().width, sprite.getTextureRect().height);
+    hitBox.update(position, size, scale);
+}
+
+/*
  * Renders player
  * Checks direction and flips left/right or sets up/down
  * Sets player coords
  */
-void Player::render(sf::RenderWindow &window) {
-    sprite.setPosition(position);
-    sprite.setScale(scale);
-
+void Player::render(sf::RenderWindow& window) {
     window.draw(sprite);
+    hitBox.render(window);
     window.setView(camera);
 }
+
