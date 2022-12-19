@@ -6,10 +6,19 @@
 #define OPENVILLAGE_TILEINFO_H
 
 #include <iostream>
-#include <string>
+#include <cstring>
 #include <fstream>
-#include <vector>
+#include <unordered_map>
 
+/*
+ * Stores tile data on current tile
+ */
+struct TileData {
+    std::string name;
+    int frictionX;
+    int frictionY;
+    bool isDeadly;
+};
 
 class TileInfo {
 public:
@@ -19,8 +28,8 @@ public:
     std::string getPath();
 
     std::string getName(int id);
-    int getFrictionX(int id);
-    int getFrictionY(int id);
+    float getFrictionX(int id);
+    float getFrictionY(int id);
     bool isDeadly(int id);
 private:
     void setupTiles();
@@ -28,9 +37,7 @@ private:
     std::string path;
 
     // Tile info (by id)
-    std::vector<std::string> nameList; // List of tile names
-    std::vector<std::pair<int, int> > frictionList; // x and y tile frictions
-    std::vector<bool> isDeadlyList; //
+    std::unordered_map<int, TileData> tileList;
 
     std::ifstream tilesFile; // config
     std::string tilesOrder; // stores id, name, friction, etc. line

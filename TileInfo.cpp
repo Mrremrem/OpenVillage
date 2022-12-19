@@ -24,19 +24,19 @@ std::string TileInfo::getPath() {
 }
 
 std::string TileInfo::getName(int id) {
-    return nameList[id];
+    return tileList.at(id).name;
 }
 
-int TileInfo::getFrictionX(int id) {
-    return frictionList[id].first;
+float TileInfo::getFrictionX(int id) {
+    return tileList.at(id).frictionX;
 }
 
-int TileInfo::getFrictionY(int id) {
-    return frictionList[id].second;
+float TileInfo::getFrictionY(int id) {
+    return tileList.at(id).frictionY;
 }
 
 bool TileInfo::isDeadly(int id) {
-    return isDeadlyList[id];
+    return tileList.at(id).isDeadly;
 }
 
 void TileInfo::setupTiles() {
@@ -54,9 +54,11 @@ void TileInfo::setupTiles() {
         tilesFile >> id >> name >> frictionX
         >> frictionY >> isDeadly;
 
-        // Stores
-        nameList.push_back(name);
-        frictionList.emplace_back(frictionX, frictionY);
-        isDeadlyList.push_back(isDeadly);
+        // Stores data
+        tileList.emplace(id, TileData());
+        tileList.at(id).name = name;
+        tileList.at(id).frictionX = frictionX;
+        tileList.at(id).frictionY = frictionY;
+        tileList.at(id).isDeadly = isDeadly;
     }
 }
