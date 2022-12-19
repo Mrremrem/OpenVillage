@@ -8,7 +8,6 @@
 #include <SFML/Graphics.hpp>
 #include <cstring>
 #include <vector>
-#include <map>
 #include "FontContainer.h"
 
 class TextBox {

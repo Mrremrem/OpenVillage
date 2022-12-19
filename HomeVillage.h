@@ -6,6 +6,7 @@
 #define OPENVILLAGE_HOMEVILLAGE_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <string>
 #include "Map.h"
 #include "TileInfo.h"
@@ -30,7 +31,8 @@ public:
     int getBlockSize();
 private:
     // Common directories (change as needed)
-    std::string MAP_DIRECTORY = "Assets/Media/Maps/map.txt";
+    std::string WORLD_MAP_DIR = "Assets/Media/Maps/base_world.txt";
+    std::string ENTITY_MAP_DIR = "Assets/Media/Maps/entity_map.txt";
     std::string TEXTURE_DIRECTORY = "Assets/Media/Textures/Tile_Textures.png";
     std::string TILE_CONFIG_DIRECTORY = "Assets/tiles_cfg.txt";
 
@@ -39,7 +41,8 @@ private:
     int SPRITE_SIZE = 16;
     const int SPRITE_DISTANCE = BLOCK_SIZE * SPRITE_SIZE;
 
-    Map villageMap; // World map
+    Map worldMap; // World map
+    Map entityMap; // Entity map
     TileInfo tileInfo; // Tile info
 
     // Holds textures/sprites
@@ -55,10 +58,10 @@ private:
     TextBox textbox;
     bool isEnterPressed;
 
+    void drawMap(sf::RenderWindow& window, Map& map, int row, int col);
     void updateTextbox(sf::RenderWindow& window); // Updates textbox
     void updateTextboxControls(sf::RenderWindow& window); // Updates textbox from keyboard inputs
     void updateTextboxArea(sf::RenderWindow& window); // Textbox area helper function
-    void updateTextboxFont();
 
     void setupTextbox();
 };

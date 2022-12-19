@@ -44,7 +44,7 @@ void TileInfo::setupTiles() {
     std::getline(tilesFile, tilesOrder);
 
     // Scans every line from tiles
-    while (tilesFile){
+    while (tilesFile.good()){
         // Gets line information
         int id;
         std::string name;

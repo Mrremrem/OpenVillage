@@ -3,6 +3,7 @@
 //
 
 #include "Map.h"
+#include <sstream>
 
 Map::Map(std::string path):
         path(path),
@@ -12,6 +13,9 @@ Map::Map(std::string path):
     }
 
     setupMap();
+    // Stores dimensions
+    height = tiles.size() - 1;
+    length = tiles.at(0).size();
 }
 
 Map::~Map() {
@@ -49,23 +53,20 @@ void Map::setupMap() {
     std::getline(mapFile, name);
 
     // Scans every line from map
-    while (mapFile){
+    while (mapFile.good()){
         // Stores current line
         std::string currentLine;
-        mapFile >> currentLine;
+        std::getline(mapFile, currentLine);
 
         // Stores each row's tiles as ints
         std::vector<int> currentRowTiles;
-        for (int lineIndex = 0; lineIndex < currentLine.length(); lineIndex++){
-            int currentTile = currentLine[lineIndex] - '0'; // as int
-            currentRowTiles.push_back(currentTile); // Stores row
+        std::stringstream tileStream(currentLine);
+        int id = 0;
+        while (tileStream >> id) {
+            currentRowTiles.push_back(id);
         }
 
         // Stores row
         tiles.push_back(currentRowTiles);
     }
-
-    // Stores dimensions
-    height = tiles.size() - 1;
-    length = tiles.at(0).size();
 }

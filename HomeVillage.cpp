@@ -3,9 +3,12 @@
 //
 
 #include "HomeVillage.h"
+#include "Map.h"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 HomeVillage::HomeVillage(sf::Vector2u windowSize):
-        villageMap(MAP_DIRECTORY),
+        worldMap(WORLD_MAP_DIR),
+        entityMap(ENTITY_MAP_DIR),
         tileInfo(TILE_CONFIG_DIRECTORY),
         windowSize(windowSize),
         textbox() {
@@ -38,20 +41,28 @@ void HomeVillage::update(sf::RenderWindow& window, Player &player) {
 }
 
 void HomeVillage::render(sf::RenderWindow &window) {
-    for (int worldRow = 0; worldRow < villageMap.getHeight(); worldRow++){
-        for (int worldCol = 0; worldCol < villageMap.getLength(); worldCol++){
-            int currentTile = villageMap.getTileAt(worldRow, worldCol);
-            setTile(currentTile);
-
-            tileSprite.setScale(BLOCK_SIZE, BLOCK_SIZE);
-            tileSprite.setPosition(worldCol * SPRITE_DISTANCE,
-                                   worldRow * SPRITE_DISTANCE);
-
-            window.draw(tileSprite);
+    tileSprite.setScale(BLOCK_SIZE, BLOCK_SIZE);
+    for (int worldRow = 0; worldRow < worldMap.getHeight(); worldRow++){
+        for (int worldCol = 0; worldCol < worldMap.getLength(); worldCol++){
+            // Draws base world
+            drawMap(window, worldMap, worldRow, worldCol);
+            drawMap(window, entityMap, worldRow, worldCol);
         }
     }
 
     textbox.render(window);
+}
+
+void HomeVillage::drawMap(sf::RenderWindow& window, Map& map, int row, int col) {
+    int currentTile = map.getTileAt(row, col);
+
+    if (currentTile != 0) {
+        setTile(currentTile);
+
+        tileSprite.setPosition(col * SPRITE_DISTANCE,
+                                row * SPRITE_DISTANCE);
+        window.draw(tileSprite);
+    }
 }
 
 void HomeVillage::setTile(int id) {
@@ -65,7 +76,6 @@ void HomeVillage::updateTextbox(sf::RenderWindow& window) {
     //
     updateTextboxControls(window);
     updateTextboxArea(window);
-    updateTextboxFont();
     textbox.update();
 }
 
@@ -101,14 +111,6 @@ void HomeVillage::updateTextboxArea(sf::RenderWindow& window) {
 
     textbox.setSize(boxSize);
     textbox.setPosition(boxPosition);
-}
-
-void HomeVillage::updateTextboxFont() {
-    if (textbox.getPageNumber() >= 9 && textbox.getPageNumber() <= 10) {
-        textbox.setFont("DynaPuff");
-    } else {
-        textbox.setFont("DynaPuff");
-    }
 }
 
 void HomeVillage::setupTextbox() {
