@@ -5,20 +5,16 @@
 #include "HomeVillage.h"
 #include "Map.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
 
 HomeVillage::HomeVillage(sf::Vector2u windowSize):
-        worldMap(WORLD_MAP_DIR),
-        entityMap(ENTITY_MAP_DIR),
-        tileInfo(TILE_CONFIG_DIRECTORY),
+        worldMap(TEXTURE_DIR, sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE), SPRITE_SIZE),
         windowSize(windowSize),
         textbox() {
-    if (!tileTextures.loadFromFile(TEXTURE_DIRECTORY)){
-        std::runtime_error("Error: Could not open Tile_Textures.png");
-    }
 
     setupTextbox();
-
-    tileSprite.setTexture(tileTextures);
+    worldMap.addLayer(WORLD_MAP_DIR);
+    worldMap.addLayer(ENTITY_MAP_DIR);
 } // QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 
 HomeVillage::~HomeVillage() {
@@ -41,33 +37,8 @@ void HomeVillage::update(sf::RenderWindow& window, Player &player) {
 }
 
 void HomeVillage::render(sf::RenderWindow &window) {
-    tileSprite.setScale(BLOCK_SIZE, BLOCK_SIZE);
-    for (int worldRow = 0; worldRow < worldMap.getHeight(); worldRow++){
-        for (int worldCol = 0; worldCol < worldMap.getLength(); worldCol++){
-            // Draws base world
-            drawMap(window, worldMap, worldRow, worldCol);
-            drawMap(window, entityMap, worldRow, worldCol);
-        }
-    }
-
+    worldMap.render(window);
     textbox.render(window);
-}
-
-void HomeVillage::drawMap(sf::RenderWindow& window, Map& map, int row, int col) {
-    int currentTile = map.getTileAt(row, col);
-
-    if (currentTile != 0) {
-        setTile(currentTile);
-
-        tileSprite.setPosition(col * SPRITE_DISTANCE,
-                                row * SPRITE_DISTANCE);
-        window.draw(tileSprite);
-    }
-}
-
-void HomeVillage::setTile(int id) {
-    int textureLocation = id * SPRITE_SIZE; // Gets texture location
-    tileSprite.setTextureRect(sf::IntRect(textureLocation, 0, SPRITE_SIZE, SPRITE_SIZE));
 }
 
 void HomeVillage::updateTextbox(sf::RenderWindow& window) {

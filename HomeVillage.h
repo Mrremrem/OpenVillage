@@ -33,8 +33,8 @@ private:
     // Common directories (change as needed)
     std::string WORLD_MAP_DIR = "Assets/Media/Maps/base_world.txt";
     std::string ENTITY_MAP_DIR = "Assets/Media/Maps/entity_map.txt";
-    std::string TEXTURE_DIRECTORY = "Assets/Media/Textures/Tile_Textures.png";
-    std::string TILE_CONFIG_DIRECTORY = "Assets/tiles_cfg.txt";
+    std::string TEXTURE_DIR = "Assets/Media/Textures/Tile_Textures.png";
+    std::string TILE_CONFIG_DIR = "Assets/tiles_cfg.txt";
 
     // Sprite info
     int BLOCK_SIZE = 5;
@@ -42,23 +42,14 @@ private:
     const int SPRITE_DISTANCE = BLOCK_SIZE * SPRITE_SIZE;
 
     Map worldMap; // World map
-    Map entityMap; // Entity map
-    TileInfo tileInfo; // Tile info
-
-    // Holds textures/sprites
-    sf::Texture tileTextures;
-    sf::Sprite tileSprite;
 
     //SpriteSheet spriteSheet; // Holds sprite info
 
     sf::Vector2u windowSize;
 
-    void setTile(int id);
-
     TextBox textbox;
     bool isEnterPressed;
 
-    void drawMap(sf::RenderWindow& window, Map& map, int row, int col);
     void updateTextbox(sf::RenderWindow& window); // Updates textbox
     void updateTextboxControls(sf::RenderWindow& window); // Updates textbox from keyboard inputs
     void updateTextboxArea(sf::RenderWindow& window); // Textbox area helper function

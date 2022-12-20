@@ -74,6 +74,32 @@ void TextBox::addPages(std::string& text, int totalPages) {
     }
 }
 
+int TextBox::getMaxCharsPerLine() {
+    /*
+     * Let me explain how I got numbers 1760 and 49
+     * I just used a random width such as 1760
+     * The number of characters that looked good is 65 (for that width)
+     * So I just made a proportion that works with those numbers that looked good:
+     * 1760/49 = width/characters
+     * So I just plug in the width and the # of characters are given
+     */
+    const int REFERENCE_NUM_OF_CHARACTERS = 65;
+    const int REFERENCE_WIDTH = 1760;
+
+    return REFERENCE_NUM_OF_CHARACTERS * size.x / REFERENCE_WIDTH;
+}
+
+int TextBox::getMaxLinesPerPage() {
+    /*
+     * ^ See getMaxCharsPerLine() for details ^
+     * ^ on how I got these constants   :3    ^
+     */
+    const int REFERENCE_NUM_OF_LINES = 4;
+    const int REFERENCE_HEIGHT = 250;
+
+    return REFERENCE_NUM_OF_LINES * size.y / REFERENCE_HEIGHT;
+}
+
 void TextBox::newlineText(std::string& text) {
     // Adds \n for every line
     for (int lineIndex = 1; lineIndex <= numOfLines; lineIndex++){
@@ -90,7 +116,11 @@ void TextBox::setFont(std::string name) {
     content.setFont(*currentFont);
 }
 
-// DELETE THIS
+/*
+ * Increments a page
+ * Pre: none
+ * Post: numOfPages = numOfPages + 1
+ */
 void TextBox::next() {
     // Tests if page # exceeds max page number
     if (currentPage + 1 < numOfPages) {
@@ -101,6 +131,11 @@ void TextBox::next() {
     }
 }
 
+/*
+ * Decrements a page
+ * Pre: none
+ * Post: numOfPages = numOfPages - 1
+ */
 void TextBox::previous() {
     // Tests if page # goes below zero
     if (currentPage - 1 >= 0) {
@@ -164,16 +199,6 @@ void TextBox::update() {
     updateText();
 }
 
-void TextBox::render(sf::RenderWindow& window) {
-    // Checks if textbox is visible
-    if (!isVisible){
-        return;
-    }
-
-    window.draw(backdrop);
-    window.draw(content);
-}
-
 void TextBox::updateBackdrop() {
     // Sets backdrop
     backdrop.setFillColor(backdropColor);
@@ -203,28 +228,12 @@ void TextBox::updateText() {
     }
 }
 
-int TextBox::getMaxCharsPerLine() {
-    /*
-     * Let me explain how I got numbers 1760 and 49
-     * I just used a random width such as 1760
-     * The number of characters that looked good is 65 (for that width)
-     * So I just made a proportion that works with those numbers that looked good:
-     * 1760/49 = width/characters
-     * So I just plug in the width and the # of characters are given
-     */
-    const int REFERENCE_NUM_OF_CHARACTERS = 65;
-    const int REFERENCE_WIDTH = 1760;
+void TextBox::render(sf::RenderWindow& window) {
+    // Checks if textbox is visible
+    if (!isVisible){
+        return;
+    }
 
-    return REFERENCE_NUM_OF_CHARACTERS * size.x / REFERENCE_WIDTH;
-}
-
-int TextBox::getMaxLinesPerPage() {
-    /*
-     * ^ See getMaxCharsPerLine() for details ^
-     * ^ on how I got these constants   :3    ^
-     */
-    const int REFERENCE_NUM_OF_LINES = 4;
-    const int REFERENCE_HEIGHT = 250;
-
-    return REFERENCE_NUM_OF_LINES * size.y / REFERENCE_HEIGHT;
+    window.draw(backdrop);
+    window.draw(content);
 }

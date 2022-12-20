@@ -4,7 +4,6 @@
 
 #include "Player.h"
 #include <SFML/System/Vector2.hpp>
-#include <cstddef>
 
 Player::Player(sf::Vector2f cameraSize, sf::Vector2f position, int spriteDistance):
     cameraSize(cameraSize),
