@@ -3,6 +3,11 @@ project(OpenVillage)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(OpenVillage main.cpp Player.cpp Player.h WindowManager.cpp WindowManager.h HomeVillage.cpp HomeVillage.h GameManager.cpp GameManager.h Map.cpp Map.h TileInfo.cpp TileInfo.h Directions.h DebugLog.cpp TextBox.cpp FontContainer.cpp CollisionBox.cpp CollisionBox.h)
+add_executable(OpenVillage main.cpp Player.cpp 
+                WindowManager.cpp HomeVillage.cpp GameManager.cpp TextureManager.cpp Map.cpp 
+                TileInfo.cpp Directions.h DebugLog.cpp TextBox.cpp FontContainer.cpp 
+                CollisionBox.cpp EntityManager.cpp Sign.cpp Entity.cpp SpriteSheet.cpp Animation.cpp)
+
+target_compile_options(OpenVillage PRIVATE -g)
 
 target_link_libraries(OpenVillage PRIVATE sfml-graphics sfml-window sfml-system)

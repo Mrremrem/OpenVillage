@@ -23,8 +23,8 @@ debug(debug) {
  * Post: Returns true if this box collides
  * with other box
  */
-bool CollisionBox::isColliding(CollisionBox* other) {
-    return box.getTextureRect().intersects(other->box.getTextureRect());
+bool CollisionBox::isColliding(CollisionBox& other) {
+    return box.getTextureRect().intersects(other.box.getTextureRect());
 }
 
 void CollisionBox::update(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f scale) {

@@ -3,42 +3,38 @@
 //
 
 #include "Player.h"
+#include "Directions.h"
+#include "SpriteSheet.h"
 #include <SFML/System/Vector2.hpp>
 
-Player::Player(sf::Vector2f cameraSize, sf::Vector2f position, int spriteDistance):
+Player::Player(TextureManager* textures, sf::Vector2f cameraSize, int spriteDistance):
+    playerSheet(textures, PLAYER_SHEET_DIR),
     cameraSize(cameraSize),
-    position(position),
     spriteDistance(spriteDistance),
     hitBox(false) {
-    if (!texture.loadFromFile(PLAYER_TEXTURE_DIRECTORY)){
-        throw std::runtime_error("Error: Could not find \'Red_Man.png\'");
-    }
 
-    sprite.setTexture(texture);
+    playerSheet.setAnimation("Idle_Right");
+    playerSheet.getSprite()->setPosition(sf::Vector2f(0, 0));
 
-    // Initializes camera
     camera.setSize(cameraSize.x, cameraSize.y);
-    camera.setCenter(position);
+    camera.setCenter(playerSheet.getSprite()->getPosition());
 }
 
 void Player::setDirection(Direction direction) {
+    prevDirection = this->direction;
     this->direction = direction;
 }
 
 void Player::setPosition(sf::Vector2f position) {
-    this->position = position;
+    playerSheet.getSprite()->setPosition(position);
 }
 
 void Player::setSpeed(sf::Vector2f speed) {
     this->speed = speed;
 }
 
-void Player::setScale(sf::Vector2f scale){
-    this->scale = scale;
-}
-
 sf::Vector2f Player::getPosition() {
-    return sprite.getPosition();
+    return playerSheet.getSprite()->getPosition();
 }
 
 Direction Player::getDirection() {
@@ -82,10 +78,28 @@ void Player::move() {
  * Post: Collision box position updated
  */
 void Player::update() {
-    sprite.setPosition(position);
-    sprite.setScale(scale);
-    sf::Vector2f size(sprite.getTextureRect().width, sprite.getTextureRect().height);
-    hitBox.update(position, size, scale);
+    playerSheet.update();
+    if (direction == Direction::Up) {
+        playerSheet.setAnimation("Walk_Up");
+    } else if (direction == Direction::Down) {
+        playerSheet.setAnimation("Walk_Down");
+    } else if (direction == Direction::Left) {
+        playerSheet.setAnimation("Walk_Left");
+    } else if (direction == Direction::Right) {
+        playerSheet.setAnimation("Walk_Right");
+    } else if (direction == Direction::None) {
+        if (prevDirection == Direction::Up) {
+            playerSheet.setAnimation("Idle_Up");
+        } else if (prevDirection == Direction::Down) {
+            playerSheet.setAnimation("Idle_Down");
+        } else if (prevDirection == Direction::Left) {
+            playerSheet.setAnimation("Idle_Left");
+        } else if (prevDirection == Direction::Right) {
+            playerSheet.setAnimation("Idle_Right");
+        }
+    }
+
+    
 }
 
 /*
@@ -94,8 +108,8 @@ void Player::update() {
  * Sets player coords
  */
 void Player::render(sf::RenderWindow& window) {
-    window.draw(sprite);
-    hitBox.render(window);
+    playerSheet.render(window);
+    //hitBox.render(window);
     window.setView(camera);
 }
 

@@ -3,18 +3,19 @@
 //
 
 #include "GameManager.h"
+#include "TextureManager.h"
 
 GameManager::GameManager():
-        window("Open Village", sf::Vector2u(1920, 1080)),
-        homeVillage(sf::Vector2u(1920, 1080)),
-        redMan(sf::Vector2f(1920, 1080), sf::Vector2f(1000, 1000),
-               homeVillage.getBlockSize()),
+        window("Open Village", WINDOW_SIZE),
+        textures(TEXTURE_CONFIG_DIR),
+        homeVillage(&textures, WINDOW_SIZE),
+        redMan(&textures, CAMERA_SIZE, homeVillage.getBlockSize()),
         playerDebug() {
     elapsedTime = clock.restart();
 
     // Initializes player stats
     redMan.setSpeed(sf::Vector2f(DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_SPEED));
-    redMan.setScale(sf::Vector2f(DEFAULT_PLAYER_SCALE, DEFAULT_PLAYER_SCALE));
+    //redMan.setScale(sf::Vector2f(DEFAULT_PLAYER_SCALE, DEFAULT_PLAYER_SCALE));
 }
 
 GameManager::~GameManager() {
@@ -34,6 +35,7 @@ WindowManager *GameManager::getWindow() {
 }
 
 void GameManager::handleInput() {
+    // Place player.handleInput() here!
     sf::Event event;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {

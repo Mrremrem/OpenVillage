@@ -7,7 +7,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <string>
+#include "TextureManager.h"
 #include "Map.h"
 #include "TileInfo.h"
 #include "Player.h"
@@ -22,19 +24,18 @@
 
 class HomeVillage {
 public:
-    HomeVillage(sf::Vector2u windowSize); // Initializes map
+    HomeVillage(TextureManager* textures, sf::Vector2u windowSize); // Initializes map
     ~HomeVillage(); // Destroys backdrop
 
     void update(sf::RenderWindow& window, Player& player);
     void render(sf::RenderWindow& window); // Displays tiles
 
+
     int getBlockSize();
 private:
     // Common directories (change as needed)
-    std::string WORLD_MAP_DIR = "Assets/Media/Maps/base_world.txt";
-    std::string ENTITY_MAP_DIR = "Assets/Media/Maps/entity_map.txt";
-    std::string TEXTURE_DIR = "Assets/Media/Textures/Tile_Textures.png";
-    std::string TILE_CONFIG_DIR = "Assets/tiles_cfg.txt";
+    const std::string WORLD_MAP_DIR = "Assets/Media/Maps/base_world_v2.txt";
+    const std::string TILE_CONFIG_DIR = "Assets/tiles_cfg.txt";
 
     // Sprite info
     int BLOCK_SIZE = 5;
@@ -46,7 +47,7 @@ private:
     //SpriteSheet spriteSheet; // Holds sprite info
 
     sf::Vector2u windowSize;
-
+    
     TextBox textbox;
     bool isEnterPressed;
 

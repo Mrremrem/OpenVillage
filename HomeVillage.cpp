@@ -3,18 +3,14 @@
 //
 
 #include "HomeVillage.h"
-#include "Map.h"
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/System/Vector2.hpp>
-
-HomeVillage::HomeVillage(sf::Vector2u windowSize):
-        worldMap(TEXTURE_DIR, sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE), SPRITE_SIZE),
+HomeVillage::HomeVillage(TextureManager* textures, sf::Vector2u windowSize):
+        worldMap(textures, TILE_CONFIG_DIR),
         windowSize(windowSize),
         textbox() {
 
     setupTextbox();
     worldMap.addLayer(WORLD_MAP_DIR);
-    worldMap.addLayer(ENTITY_MAP_DIR);
+    //worldMap.addLayer(ENTITY_MAP_DIR);
 } // QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 
 HomeVillage::~HomeVillage() {
@@ -29,6 +25,8 @@ void HomeVillage::update(sf::RenderWindow& window, Player &player) {
     if (player.getDirection() != Direction::None){
         player.move();
     }
+
+    worldMap.update();
 
     // Sets player in middle of view
     player.setPosition(player.getCameraView().getCenter());

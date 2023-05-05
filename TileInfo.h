@@ -5,42 +5,52 @@
 #ifndef OPENVILLAGE_TILEINFO_H
 #define OPENVILLAGE_TILEINFO_H
 
+#include "SpriteSheet.h"
+#include "TextureManager.h"
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <cstring>
 #include <fstream>
 #include <unordered_map>
 
 /*
- * Stores tile data on current tile
+ * Stores data from tiles. Only used for single, arbitrary tiles
+ * for TileInfo
  */
-struct TileData {
+struct Tile {
+    Tile(TextureManager* textures, const std::string& sheetPath);
+    
     std::string name;
     int frictionX;
     int frictionY;
     bool isDeadly;
+
+    SpriteSheet spriteSheet;
 };
 
+/*
+ * Stores all TileData in container
+ */
 class TileInfo {
 public:
-    TileInfo(const std::string& path);
-    ~TileInfo();
+    TileInfo(TextureManager* textures, const std::string& tileInfoPath);
 
-    std::string getPath();
-
-    std::string getName(int id);
-    float getFrictionX(int id);
-    float getFrictionY(int id);
-    bool isDeadly(int id);
+    Tile getTile(int id);
 private:
-    void setupTiles();
+    // Textures
+    TextureManager* textures;
+    const std::string TEXTURE_NAME = "Tile_Textures";
 
-    std::string path;
+    // Tile info (by id, no duplicates)
+    std::unordered_map<int, Tile> tileList;
 
-    // Tile info (by id)
-    std::unordered_map<int, TileData> tileList;
+    // config file for TileInfo
+    std::ifstream tilesFile;
 
-    std::ifstream tilesFile; // config
-    std::string tilesOrder; // stores id, name, friction, etc. line
+    void setupConfig();
+    void setTile();
 };
 
 

@@ -16,7 +16,7 @@
 class FontContainer {
 public:
     void addFont(std::string fontName, std::string fontDir); // Appends font to container
-    sf::Font* getFont(std::string fontName); // Returns font from name
+    sf::Font* getFont(std::string fontName); // Returns this font pointer from name
 
 private:
     sf::Font currentFont;
