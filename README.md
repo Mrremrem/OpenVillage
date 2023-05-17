@@ -23,3 +23,6 @@ Please send me any error logs. I don't have another machine to test this yet! [(
 ## Compiling for Windows/Mac users
 ### ¯\\_ (ツ)_/¯
 I'm guessing it's the same as the one above for Linux (I'm not using either at the moment). I'll probably just give out binary files for each sometime in the following months (I'm going back to school this week!) Also, I'm obligatoried/obligated (is that even a word?) to say that I've successfully picked up that emoticon's arm and placed it back correctly! ...Anyway I'll get to it when the time comes :P
+
+# Designs and Problems I've encountered
+I started writing all of the problems/ideas I had in mind while making OpenVillage and I thought it'd be wise to write it all out for future reference. If anyone's interested in reading or wanting to avoid repeating history, [(here's a doc that has everything.)] (https://docs.google.com/document/d/1mOTh3PXjUBtSpxSRjTBltybuhi8stifmhpHf8aiQ744/edit?usp=sharing)
