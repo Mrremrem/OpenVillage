@@ -1,0 +1,10 @@
+id|name|friction_x|friction_y|deadly
+0 Grass 0.9 0.9 0
+1 Tall_Grass 0.9 0.9 0
+2 Water 1 1 0
+3 Plank 0.9 0.9 0
+4 Birch_Plank 0.9 0.9 0
+5 Redwood_Plank 0.9 0.9 0
+6 Yellow_Flower 0.9 0.9 0
+7 Cyan_Flower 0.9 0.9 0
+8 Purpleish_Flower 0.9 0.9 0

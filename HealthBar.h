@@ -16,7 +16,10 @@ public:
 
     void render(sf::RenderWindow& window);
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> e58c56e (Hurrah! Binary Trees!)
     int getNumOfBars();
 private:
     int numOfBars;

@@ -3,6 +3,7 @@
 //
 
 #include "HomeVillage.h"
+<<<<<<< HEAD
 HomeVillage::HomeVillage(TextureManager* textures, sf::Vector2u windowSize):
         worldMap(textures, TILE_CONFIG_DIR),
         windowSize(windowSize),
@@ -11,6 +12,17 @@ HomeVillage::HomeVillage(TextureManager* textures, sf::Vector2u windowSize):
     setupTextbox();
     worldMap.addLayer(WORLD_MAP_DIR);
     //worldMap.addLayer(ENTITY_MAP_DIR);
+=======
+#include "DebugLog.h"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
+HomeVillage::HomeVillage(ResourceManager<sf::Texture>& textures, const sf::Vector2f& windowSize):
+worldMap(textures, TILE_CONFIG_DIR) {
+
+    //worldMap.addLayer(WORLD_MAP_DIR);
+    worldMap.initializeMap(WORLD_MAP_DIR);
+    //worldMap.addLwindow.setView(window.getDefaultView());vayer(ENTITY_MAP_DIR);
+>>>>>>> e58c56e (Hurrah! Binary Trees!)
 } // QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 
 HomeVillage::~HomeVillage() {
@@ -21,6 +33,7 @@ int HomeVillage::getBlockSize() {
     return BLOCK_SIZE;
 }
 
+<<<<<<< HEAD
 void HomeVillage::update(sf::RenderWindow& window, Player &player) {
     if (player.getDirection() != Direction::None){
         player.move();
@@ -82,6 +95,22 @@ void HomeVillage::updateTextboxArea(sf::RenderWindow& window) {
     textbox.setPosition(boxPosition);
 }
 
+=======
+void HomeVillage::handleInput() {
+    //redMan.handleInput();
+}
+
+void HomeVillage::update(sf::RenderWindow& window) {
+    worldMap.update();
+}
+
+void HomeVillage::render(sf::RenderWindow &window) {
+    window.setView(window.getDefaultView());
+    worldMap.render(window);
+}
+
+/*
+>>>>>>> e58c56e (Hurrah! Binary Trees!)
 void HomeVillage::setupTextbox() {
     //textbox.addText("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
     //                "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
@@ -120,4 +149,8 @@ void HomeVillage::setupTextbox() {
     textbox.addPage("I wonder if I was made by nature or a creator...");
     textbox.setFont("DynaPuff");
     //textbox.addText(test1);
+<<<<<<< HEAD
 }
+=======
+}*/
+>>>>>>> e58c56e (Hurrah! Binary Trees!)
