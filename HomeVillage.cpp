@@ -3,14 +3,15 @@
 //
 
 #include "HomeVillage.h"
-HomeVillage::HomeVillage(TextureManager* textures, sf::Vector2u windowSize):
-        worldMap(textures, TILE_CONFIG_DIR),
-        windowSize(windowSize),
-        textbox() {
+#include "DebugLog.h"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
+HomeVillage::HomeVillage(ResourceManager<sf::Texture>& textures, const sf::Vector2f& windowSize):
+worldMap(textures, TILE_CONFIG_DIR) {
 
-    setupTextbox();
-    worldMap.addLayer(WORLD_MAP_DIR);
-    //worldMap.addLayer(ENTITY_MAP_DIR);
+    //worldMap.addLayer(WORLD_MAP_DIR);
+    worldMap.initializeMap(WORLD_MAP_DIR);
+    //worldMap.addLwindow.setView(window.getDefaultView());vayer(ENTITY_MAP_DIR);
 } // QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 
 HomeVillage::~HomeVillage() {
@@ -21,67 +22,20 @@ int HomeVillage::getBlockSize() {
     return BLOCK_SIZE;
 }
 
-void HomeVillage::update(sf::RenderWindow& window, Player &player) {
-    if (player.getDirection() != Direction::None){
-        player.move();
-    }
+void HomeVillage::handleInput() {
+    //redMan.handleInput();
+}
 
+void HomeVillage::update(sf::RenderWindow& window) {
     worldMap.update();
-
-    // Sets player in middle of view
-    player.setPosition(player.getCameraView().getCenter());
-
-    updateTextbox(window);
 }
 
 void HomeVillage::render(sf::RenderWindow &window) {
+    window.setView(window.getDefaultView());
     worldMap.render(window);
-    textbox.render(window);
 }
 
-void HomeVillage::updateTextbox(sf::RenderWindow& window) {
-    // Textbox controls
-
-    //
-    updateTextboxControls(window);
-    updateTextboxArea(window);
-    textbox.update();
-}
-
-void HomeVillage::updateTextboxControls(sf::RenderWindow& window) {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::KeyPressed){
-            switch (event.key.code) {
-                case sf::Keyboard::T:
-                    textbox.setPageNumber(0);
-                    textbox.setVisibility(true);
-                    break;
-                case sf::Keyboard::Return:
-                    textbox.next();
-                    break;
-                case sf::Keyboard::Space:
-                    textbox.next();
-                    break;
-                case sf::Keyboard::Escape:
-                    textbox.previous();
-                    break;
-            }
-        }
-    }
-}
-
-void HomeVillage::updateTextboxArea(sf::RenderWindow& window) {
-    const int BOX_WIDTH = 22; // 22
-    const int BOX_HEIGHT = 4; // 4
-    sf::Vector2f boxSize(SPRITE_DISTANCE * BOX_WIDTH, SPRITE_DISTANCE * BOX_HEIGHT);
-    sf::Vector2f boxPosition(window.mapPixelToCoords(
-            sf::Vector2i(SPRITE_DISTANCE, windowSize.y - SPRITE_DISTANCE * BOX_HEIGHT)));
-
-    textbox.setSize(boxSize);
-    textbox.setPosition(boxPosition);
-}
-
+/*
 void HomeVillage::setupTextbox() {
     //textbox.addText("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
     //                "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
@@ -120,4 +74,4 @@ void HomeVillage::setupTextbox() {
     textbox.addPage("I wonder if I was made by nature or a creator...");
     textbox.setFont("DynaPuff");
     //textbox.addText(test1);
-}
+}*/

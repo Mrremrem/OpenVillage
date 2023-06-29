@@ -3,18 +3,14 @@
 //
 
 #include "GameManager.h"
-#include "TextureManager.h"
 
 GameManager::GameManager():
-        window("Open Village", WINDOW_SIZE),
-        textures(TEXTURE_CONFIG_DIR),
-        homeVillage(&textures, WINDOW_SIZE),
-        redMan(&textures, CAMERA_SIZE, homeVillage.getBlockSize()),
-        playerDebug() {
+window("Open Village", WINDOW_SIZE),
+textures(TEXTURE_CONFIG_DIR),
+homeVillage(textures, sf::Vector2f(WINDOW_SIZE)) {
     elapsedTime = clock.restart();
 
     // Initializes player stats
-    redMan.setSpeed(sf::Vector2f(DEFAULT_PLAYER_SPEED, DEFAULT_PLAYER_SPEED));
     //redMan.setScale(sf::Vector2f(DEFAULT_PLAYER_SCALE, DEFAULT_PLAYER_SCALE));
 }
 
@@ -35,22 +31,22 @@ WindowManager *GameManager::getWindow() {
 }
 
 void GameManager::handleInput() {
-    // Place player.handleInput() here!
-    sf::Event event;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        redMan.setDirection(Direction::Up);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-               sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        redMan.setDirection(Direction::Down);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-               sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        redMan.setDirection(Direction::Left);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-               sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        redMan.setDirection(Direction::Right);
-    } else {
-        redMan.setDirection(Direction::None);
+    //homeVillage.handleInput();
+}
+
+/*
+ * Updates world and objects in world
+ * Pre: none
+ * Post: none
+ */
+void GameManager::update() {
+    float frameTime = 1.0f / MAX_FPS;
+
+    // Checks if time elapsed exceeds frame time
+    if (elapsedTime.asSeconds() >= frameTime){
+        homeVillage.update(*window.getRenderWindow());
+
+        elapsedTime -= sf::seconds(frameTime);
     }
 }
 
@@ -58,31 +54,14 @@ void GameManager::render() {
     window.beginDraw();
 
     homeVillage.render(*window.getRenderWindow());
-    redMan.render(*window.getRenderWindow());
-    playerDebug.render(*window.getRenderWindow());
+    /*redMan.render(*window.getRenderWindow());
+    playerDebug.render(*window.getRenderWindow());*/
 
 
     window.endDraw();
 }
 
-// Collision on world objects etc.
-void GameManager::update() {
-    // Single frame
-    float frameTime = 1.0f / MAX_FPS;
-
-    redMan.update();
-
-    // Checks if time elapsed exceeds frame time
-    if (elapsedTime.asSeconds() >= frameTime){
-        homeVillage.update(*window.getRenderWindow(), redMan);
-
-        updatePlayerDebug();
-
-        elapsedTime -= sf::seconds(frameTime);
-    }
-}
-
-void GameManager::updatePlayerDebug() {
+/*void GameManager::updatePlayerDebug() {
     // Setting player info on top left corner
     sf::Vector2f topLeftView = window.getRenderWindow()->
     mapPixelToCoords(sf::Vector2i(0, 0));
@@ -100,7 +79,7 @@ void GameManager::updatePlayerDebug() {
                         std::to_string(redMan.getCameraView().getCenter().x));
     playerDebug.insert(3, "Camera Y: " + 
                         std::to_string(redMan.getCameraView().getCenter().y));
-}
+}*/
 
 // Leaving this here in case I need it
 /*void GameManager::updateTextboxDebug() {

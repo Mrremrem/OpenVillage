@@ -12,18 +12,24 @@
 #include <SFML/System/Time.hpp>
 #include <string>
 struct Frame {
-    sf::IntRect* area;
+    sf::IntRect area;
     sf::Time duration;
 };
 
 class Animation {
 public:
-    Animation(sf::Sprite& baseSprite, std::string name);
+    Animation(sf::Sprite& baseSprite, std::string& animationName, std::string& spriteName);
 
     void update();
 
+    void changeBaseSprite(sf::Sprite& sprite);
+
+    std::string getSpriteName() const;
+    std::string getAnimationName() const;
 
     void addFrame(sf::IntRect area, sf::Time duration);
+    Frame* getFrame(int index);
+    int getNumOfFrames();
 
     void reset();
 private:
@@ -35,7 +41,8 @@ private:
 
     sf::Sprite* sprite;
 
-    std::string name;
+    std::string animationName;
+    std::string spriteName;
 };
 
 #endif // OPENVILLAGE_ANIMATION_H

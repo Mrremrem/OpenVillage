@@ -6,52 +6,71 @@
 #define OPENVILLAGE_PLAYER_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "Directions.h"
 #include "CollisionBox.h"
+#include "Entity.h"
 #include "SpriteSheet.h"
-#include "TextureManager.h"
+#include "ResourceManager.h"
 
 /*
  * What?
  * Handles player information (position, sprite)
  */
-class Player {
+class Player : public Entity {
 public:
     // Initializes player sprite
-    Player(TextureManager* textures, sf::Vector2f cameraSize, int spriteDistance); 
+    Player(ResourceManager<sf::Texture>& textures, sf::Vector2f cameraSize); 
 
+    void handleInput(); // Handles movement direction input
     void update(); // Updates collision box
     void render(sf::RenderWindow& window); // Renders player to screen
 
 
     void setDirection(Direction direction); // Sets player direction
-    void setPosition(sf::Vector2f position);
-    void setSpeed(sf::Vector2f speed);
+    void setPosition(sf::Vector2f position); // Sets player position
+    void setScale(sf::Vector2f scale); // Sets player scale
+    void setSpeed(sf::Vector2f speed); // Sets player speed
+    void setAnimation(const std::string& animation); // Sets sprite animation
+    //void setLayerNum(int layerNum); // Sets player's layer
 
-    sf::Vector2f getPosition();
-    Direction getDirection();
-    sf::View getCameraView();
+    sf::Vector2f getPosition(); // Gets player position
+    Direction getDirection(); // Gets player direction
+    sf::View& getView(); // Gets view
+    SpriteSheet& getSpriteSheet(); // Gets SpriteSheet container
 
-    void move();
+    const bool isColliding(Entity& other); // Tests if player collides with other entity
+    const std::string getID(); // Gets entity ID
+    //const int getLayerNum(); // Gets layer player is in
+
+    // For comparisons (used for sorting)
+    /*bool operator<(Entity& other);
+    bool operator==(Entity& other);*/
 
 private:
-    std::string PLAYER_SHEET_DIR = "Assets/Media/SpriteSheets/Player_Sheet.txt";
-    SpriteSheet playerSheet;
+    void moveSprite();
+    void updateWalkingAnimation();
+    void updateHitBox();
+
+    const std::string ID = "Player";
+    const std::string PLAYER_SHEET_DIR = "Assets/Media/SpriteSheets/Player_Sheet.ini";
+    SpriteSheet spriteSheet;
 
     sf::Vector2f speed;
     Direction direction;
     Direction prevDirection;
     
 
-    sf::View camera;
-    sf::Vector2f cameraSize;
-    float cameraSpeed = 3;
+    sf::View view;
+    sf::Vector2f viewSize;
+    float viewSpeed = 3;
 
     int spriteDistance;
 
     CollisionBox hitBox;
 
-    void updateHitBox();
+    //int layerNum;
 };
 
 

@@ -6,11 +6,12 @@
 #define OPENVILLAGE_GAMEMANAGER_H
 
 #include "WindowManager.h"
-#include "TextureManager.h"
+#include "ResourceManager.h"
 #include "HomeVillage.h"
 #include "Player.h"
 #include "TextBox.h"
 #include "DebugLog.h"
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 
 class GameManager {
@@ -32,8 +33,8 @@ private:
     WindowManager window;
 
     // Loads up textures
-    const std::string TEXTURE_CONFIG_DIR = "Assets/textures_cfg.txt";
-    TextureManager textures;
+    std::string TEXTURE_CONFIG_DIR = "Assets/textures_cfg.ini";
+    ResourceManager<sf::Texture> textures;
 
     sf::Clock clock;
     sf::Time elapsedTime;
@@ -43,16 +44,15 @@ private:
 
     const int DEFAULT_PLAYER_SPEED = 3;
     const int DEFAULT_PLAYER_SCALE = 5;
-    sf::Vector2f CAMERA_SIZE = sf::Vector2f(1920, 1080);
-    Player redMan;
-    DebugLog playerDebug;
+    //sf::Vector2f CAMERA_SIZE = sf::Vector2f(1920, 1080);
+    //DebugLog playerDebug;
 
     
 
-    void updateTextbox(); // Updates textbox
+    /*void updateTextbox(); // Updates textbox
 
     void updatePlayerDebug();
-    void updateTextboxDebug();
+    void updateTextboxDebug();*/
 };
 
 
