@@ -7,11 +7,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <string>
-#include "TextureManager.h"
+#include "DebugLog.h"
+#include "ResourceManager.h"
 #include "Map.h"
-#include "TileInfo.h"
+#include "TileManager.h"
 #include "Player.h"
 #include "TextBox.h"
 
@@ -24,18 +26,19 @@
 
 class HomeVillage {
 public:
-    HomeVillage(TextureManager* textures, sf::Vector2u windowSize); // Initializes map
+    HomeVillage(ResourceManager<sf::Texture>& textures, const sf::Vector2f& windowSize); // Initializes map
     ~HomeVillage(); // Destroys backdrop
 
-    void update(sf::RenderWindow& window, Player& player);
+    void handleInput();
+    void update(sf::RenderWindow& window);
     void render(sf::RenderWindow& window); // Displays tiles
 
 
     int getBlockSize();
 private:
     // Common directories (change as needed)
-    const std::string WORLD_MAP_DIR = "Assets/Media/Maps/base_world_v2.txt";
-    const std::string TILE_CONFIG_DIR = "Assets/tiles_cfg.txt";
+    const std::string WORLD_MAP_DIR = "Assets/Media/Maps/BaseLevel_HomeVillage.ini";
+    const std::string TILE_CONFIG_DIR = "Assets/tiles_cfg.ini";
 
     // Sprite info
     int BLOCK_SIZE = 5;
@@ -46,16 +49,19 @@ private:
 
     //SpriteSheet spriteSheet; // Holds sprite info
 
-    sf::Vector2u windowSize;
+    sf::Vector2f windowSize;
+
+    //Player redMan;
+
+    DebugLog viewDebugLog;
     
-    TextBox textbox;
-    bool isEnterPressed;
+    /*TextBox textbox;
 
     void updateTextbox(sf::RenderWindow& window); // Updates textbox
     void updateTextboxControls(sf::RenderWindow& window); // Updates textbox from keyboard inputs
     void updateTextboxArea(sf::RenderWindow& window); // Textbox area helper function
 
-    void setupTextbox();
+    void setupTextbox();*/
 };
 
 

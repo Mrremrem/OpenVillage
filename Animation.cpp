@@ -1,19 +1,18 @@
 #include "Animation.h"
-#include <SFML/Config.hpp>
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/System/Time.hpp>
-#include <stdexcept>
 
 /*
  * Sets base for animation
  * Pre: none
  * Post: Initializes base sprite for animation
  */
-Animation::Animation(sf::Sprite& baseSprite, std::string name):
-name(name) {
-    sprite = &baseSprite;
+ #include <iostream>
+#include <stdexcept>
+Animation::Animation(sf::Sprite& baseSprite, std::string& animationName, std::string& spriteName):
+animationName(animationName),
+spriteName(spriteName),
+sprite(&baseSprite) {
     frameIndex = 0;
+    //std::cout << "Animation.cpp for " << sprite << ":" << " Sprite address: " << sprite << " Pointer address: " << &sprite << " baseSprite address: " << &baseSprite << " baseSprite's pointer address: " << "none" << std::endl;
 }
 
 /*
@@ -21,41 +20,32 @@ name(name) {
  * Pre: frameList.size() > 0
  * Post: none
  */
- #include <iostream>
+
 void Animation::update() {
-    std::cout << "Name: " << name 
-    << "Animation: frameIndex: " << frameIndex 
-    << " frameList.size(): " << frameList.size() 
-    << " Sprite scale X (Should be 5): " << sprite->getScale().x 
-    << " Sprite scale Y (Should be 5): " << sprite->getScale().y 
-    << " Sprite rect size X: " << sprite->getTextureRect().width 
-    << " Sprite rect size Y: " << sprite->getTextureRect().height 
-    << std::endl;
+    // Tests precondition
+    if (frameList.size() <= 0) {
+        throw std::logic_error("Animation::update() error: Failed precondition. "
+        "frameList.size() must be > 0");
+    }
 
     if (frameList.size() > 1) {
-        //std::cout << "Animation: Current frameIndex: " << frameIndex << std::endl;
         Frame* currentFrame = &frameList.at(frameIndex);
         elapsed += clock.getElapsedTime();
-        //std::cout << "Elapsed: " << elapsed.asSeconds() << " Duration: " << currentFrame->duration.asSeconds() << std::endl;
+
         if (elapsed.asSeconds() >= currentFrame->duration.asSeconds()) {
             frameIndex++;
+
             if (frameIndex >= frameList.size()) {
-                std::cout << "Resetted frameIndex to 0" << std::endl;
                 frameIndex = 0;
             }
 
-            Frame* newFrame = &frameList.at(frameIndex);
-            sprite->setTextureRect(*newFrame->area);
+            Frame* nextFrame = &frameList.at(frameIndex);
+            sprite->setTextureRect(nextFrame->area);
             elapsed -= currentFrame->duration;
-            
-            //std::cout << "Animation has changed!" << std::endl;
         }
     } else if (frameList.size() == 1) {
-        sf::IntRect rect = *frameList.at(0).area;
-        sprite->setTextureRect(*frameList.at(0).area);
-        std::cout << "Animation: Running prints..." << std::endl;
-        //std::cout << "Animation: Default at 0: X = " << frameList.at(0).area->left << " Y = " << frameList.at(0).area->top << " Width = " << frameList.at(0).area->width << " Height = " << frameList.at(0).area->height << std::endl;
-        std::cout << "Animation: Default rect: X = " << rect.left << " Y = " << rect.top << " Width = " << rect.width << " Height = " << rect.height << std::endl;
+        Frame newFrame = frameList.at(0);
+        sprite->setTextureRect(newFrame.area);
     }
 
     clock.restart();
@@ -68,13 +58,14 @@ void Animation::update() {
  */
 void Animation::addFrame(sf::IntRect area, sf::Time duration) {
     Frame frame;
-    frame.area = new sf::IntRect(area);
+    frame.area = area;
     frame.duration = duration;
 
-    std::cout << "Animation: Adding frame at x = " << area.left << " y = " << area.top << " width = " << area.width << " height = " << area.height << "Sprite scale X: " << sprite->getScale().x << "Sprite scale Y: " << sprite->getScale().y << std::endl;
+    //std::cout << "Animation: Now adding frame (area rect) at x = " << area.left << " y = " << area.top << " width = " << area.width << " height = " << area.height << " Sprite scale X: " << sprite->getScale().x << " Sprite scale Y: " << sprite->getScale().y << std::endl;
 
     frameList.push_back(frame);
-    std::cout << "Animation: After adding frame: x = " << frameList.back().area->left << " y = " << frameList.back().area->top << " width = " << frameList.back().area->width << " height = " << frameList.back().area->height << "Sprite scale X: " << sprite->getScale().x << "Sprite scale Y: " << sprite->getScale().y << std::endl;
+    /*std::cout << "Animation: After adding frame: x = " << frameList.back().area.left << " y = " << frameList.back().area.top << " width = " << frameList.back().area.width << " height = " << frameList.back().area.height << " Sprite scale X: " << sprite->getScale().x << " Sprite scale Y: " << sprite->getScale().y << std::endl;
+    std::cout << "End of adding frame for " << animationName << "\n" << std::endl;*/
     clock.restart();
 }
 
@@ -88,8 +79,34 @@ void Animation::reset() {
         throw std::out_of_range("Could not reset animation. frameList.size() must be > 0");
     }
 
-    sprite->setTextureRect(*frameList.at(0).area);
+    sprite->setTextureRect(frameList.at(0).area);
     frameIndex = 0;
     elapsed = sf::seconds(0);
     clock.restart();
+}
+
+Frame* Animation::getFrame(int index) {
+    return &frameList.at(index);
+}
+
+int Animation::getNumOfFrames() {
+    return frameList.size();
+}
+
+std::string Animation::getAnimationName() const{
+    return animationName;
+}
+
+std::string Animation::getSpriteName() const{
+    return spriteName;
+}
+
+/*
+ * Changes base sprite used for animation
+ * Pre: None
+ * Post: None
+ */
+void Animation::changeBaseSprite(sf::Sprite& sprite) {
+    this->sprite = nullptr;
+    this->sprite = &sprite;
 }

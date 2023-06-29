@@ -76,12 +76,13 @@ void TextBox::addPages(std::string& text, int totalPages) {
 
 int TextBox::getMaxCharsPerLine() {
     /*
-     * Let me explain how I got numbers 1760 and 49
+     * Let me explain how I got numbers 1760 and 65
      * I just used a random width such as 1760
      * The number of characters that looked good is 65 (for that width)
      * So I just made a proportion that works with those numbers that looked good:
-     * 1760/49 = width/characters
-     * So I just plug in the width and the # of characters are given
+     * 1760/65 = width/characters
+     * So I just plug in an arbitrary width and solve for the # of characters for 
+     * that arbitrary width :)
      */
     const int REFERENCE_NUM_OF_CHARACTERS = 65;
     const int REFERENCE_WIDTH = 1760;

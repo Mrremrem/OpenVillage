@@ -10,20 +10,23 @@
 #include "Entity.h"
 #include "CollisionBox.h"
 #include "TextBox.h"
-#include "TileInfo.h"
+#include "TileManager.h"
 class Sign : public Entity {
 public:
-    Sign(Tile* tile);
+    Sign();
 
     void update();
     void render(sf::RenderWindow& window);
 
+    // For comparisons (used for sorting)
+    /*bool operator<(Entity& other);
+    bool operator==(Entity& other);*/
+
 private:
     TextBox textbox;
 
-    Tile* tile;
-
-    const int ID = 12;
+    const std::string ID = "Sign";
+    //int layerNum;
 };
 
 #endif // OPENVILLAGE_SIGN_H

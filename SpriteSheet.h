@@ -15,34 +15,42 @@
 #include <unordered_map>
 #include <fstream>
 #include <stdexcept>
-#include "TextureManager.h"
+#include "ResourceManager.h"
 #include "Animation.h"
+#include <iostream>
 
+/*
+ * Creates an arbitrary spritesheet for
+ * an individual sprite and handles animations
+ */
 class SpriteSheet {
 public:
-    SpriteSheet(TextureManager* textures, const std::string& sheetPath);
-    //SpriteSheet(const SpriteSheet& other); // Copy constructor
+    SpriteSheet(ResourceManager<sf::Texture>& textures, const std::string& sheetPath);
+    SpriteSheet(const SpriteSheet& other); // Copy constructor
 
     void update();
     void render(sf::RenderWindow& window);
 
 
     void setAnimation(const std::string& animation);
-    sf::Sprite* getSprite();
-private:
-    TextureManager* textures;
+    Animation* getAnimation(const std::string& animationName);
+    std::string getName();
 
-    void loadSheet(std::string sheetPath);
+    sf::Sprite& getSprite();
+private:
+    ResourceManager<sf::Texture>& textures;
+
+    void loadSheet(const std::string& sheetPath);
     void addAnimation(std::ifstream& spriteFile);
 
     std::unordered_map<std::string, Animation> animationList;
-    std::string currentAnimation;
 
     // Sprite info
     sf::Sprite sprite;
+    std::string name;
+    std::string currentAnimation;
     sf::Vector2i size;
     sf::Vector2f scale;
-    
 };
 
 #endif // OPENVILLAGE_SPRITESHEET_H

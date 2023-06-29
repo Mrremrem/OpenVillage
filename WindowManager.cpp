@@ -3,6 +3,8 @@
 //
 
 #include "WindowManager.h"
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 // Creates a default 640x480 window
 WindowManager::WindowManager() {
@@ -46,13 +48,15 @@ void WindowManager::setup(const std::string title, const sf::Vector2u size) {
 // Processes events
 void WindowManager::update() {
     sf::Event event;
-
     // Processes all events
     while (window.pollEvent(event)){
         if (event.type == sf::Event::Closed){
             isWindowTerminated = true;
         } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5){
             toggleFullScreen();
+        } else if (event.type == sf::Event::Resized) {
+            sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
+            window.setView(sf::View(visibleArea));
         }
     }
 }
