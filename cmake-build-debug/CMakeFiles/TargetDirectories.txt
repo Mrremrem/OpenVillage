@@ -1,3 +1,0 @@
-/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/CMakeFiles/OpenVillage.dir
-/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/mrremrem/CLionProjects/OpenVillage/cmake-build-debug/CMakeFiles/rebuild_cache.dir
