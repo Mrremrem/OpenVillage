@@ -16,7 +16,6 @@ public:
 
     void render(sf::RenderWindow& window);
 
-    
     int getNumOfBars();
 private:
     int numOfBars;

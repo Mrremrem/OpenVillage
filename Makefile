@@ -441,53 +441,53 @@ TextBox.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TextBox.cpp.s
 .PHONY : TextBox.cpp.s
 
-TextureManager.o: TextureManager.cpp.o
-.PHONY : TextureManager.o
+Tile.o: Tile.cpp.o
+.PHONY : Tile.o
 
 # target to build an object file
-TextureManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TextureManager.cpp.o
-.PHONY : TextureManager.cpp.o
+Tile.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/Tile.cpp.o
+.PHONY : Tile.cpp.o
 
-TextureManager.i: TextureManager.cpp.i
-.PHONY : TextureManager.i
+Tile.i: Tile.cpp.i
+.PHONY : Tile.i
 
 # target to preprocess a source file
-TextureManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TextureManager.cpp.i
-.PHONY : TextureManager.cpp.i
+Tile.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/Tile.cpp.i
+.PHONY : Tile.cpp.i
 
-TextureManager.s: TextureManager.cpp.s
-.PHONY : TextureManager.s
+Tile.s: Tile.cpp.s
+.PHONY : Tile.s
 
 # target to generate assembly for a file
-TextureManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TextureManager.cpp.s
-.PHONY : TextureManager.cpp.s
+Tile.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/Tile.cpp.s
+.PHONY : Tile.cpp.s
 
-TileInfo.o: TileInfo.cpp.o
-.PHONY : TileInfo.o
+TileManager.o: TileManager.cpp.o
+.PHONY : TileManager.o
 
 # target to build an object file
-TileInfo.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TileInfo.cpp.o
-.PHONY : TileInfo.cpp.o
+TileManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TileManager.cpp.o
+.PHONY : TileManager.cpp.o
 
-TileInfo.i: TileInfo.cpp.i
-.PHONY : TileInfo.i
+TileManager.i: TileManager.cpp.i
+.PHONY : TileManager.i
 
 # target to preprocess a source file
-TileInfo.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TileInfo.cpp.i
-.PHONY : TileInfo.cpp.i
+TileManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TileManager.cpp.i
+.PHONY : TileManager.cpp.i
 
-TileInfo.s: TileInfo.cpp.s
-.PHONY : TileInfo.s
+TileManager.s: TileManager.cpp.s
+.PHONY : TileManager.s
 
 # target to generate assembly for a file
-TileInfo.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TileInfo.cpp.s
-.PHONY : TileInfo.cpp.s
+TileManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/TileManager.cpp.s
+.PHONY : TileManager.cpp.s
 
 WindowManager.o: WindowManager.cpp.o
 .PHONY : WindowManager.o
@@ -585,12 +585,12 @@ help:
 	@echo "... TextBox.o"
 	@echo "... TextBox.i"
 	@echo "... TextBox.s"
-	@echo "... TextureManager.o"
-	@echo "... TextureManager.i"
-	@echo "... TextureManager.s"
-	@echo "... TileInfo.o"
-	@echo "... TileInfo.i"
-	@echo "... TileInfo.s"
+	@echo "... Tile.o"
+	@echo "... Tile.i"
+	@echo "... Tile.s"
+	@echo "... TileManager.o"
+	@echo "... TileManager.i"
+	@echo "... TileManager.s"
 	@echo "... WindowManager.o"
 	@echo "... WindowManager.i"
 	@echo "... WindowManager.s"
