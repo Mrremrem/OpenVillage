@@ -23,11 +23,15 @@
  * Rows: 15
  */
 
-
+/*
+ * To do: write comments for HomeVillage
+ */
 class HomeVillage {
 public:
-    HomeVillage(ResourceManager<sf::Texture>& textures, const sf::Vector2f& windowSize); // Initializes map
-    ~HomeVillage(); // Destroys backdrop
+    // Initializes HomeVillage map
+    HomeVillage(ResourceManager<sf::Texture>& textures, 
+    ResourceManager<sf::Font>& fonts, 
+    const sf::Vector2f& windowSize);
 
     void handleInput();
     void update(sf::RenderWindow& window);

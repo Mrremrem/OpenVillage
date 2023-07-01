@@ -1,9 +1,11 @@
 #include "Sign.h"
 #include "Entity.h"
+#include "ResourceManager.h"
 #include <SFML/System/Vector2.hpp>
 
-Sign::Sign():
-Entity(EntityType::Base, EntityState::Idle) {
+Sign::Sign(ResourceManager<sf::Font>& fonts):
+Entity(EntityType::Base, EntityState::Idle),
+textbox(fonts) {
     // Empty
 }
 

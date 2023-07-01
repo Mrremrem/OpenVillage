@@ -14,7 +14,7 @@
  * Post: none
  */
 template <typename TGenericResource>
-ResourceManager<TGenericResource>::ResourceManager(std::string& path) {
+ResourceManager<TGenericResource>::ResourceManager(const std::string& path) {
     loadConfig(path);
 }
 
@@ -37,67 +37,68 @@ ResourceManager<TGenericResource>::~ResourceManager() {
  * Post: maps resourceList with resource
  */
 template <typename TGenericResource>
-void ResourceManager<TGenericResource>::loadConfig(std::string& path) {
-    std::ifstream textureConfig(path);
+void ResourceManager<TGenericResource>::loadConfig(const std::string& path) {
+    std::ifstream resourceConfig(path);
     
-    if (textureConfig.fail()) {
-        throw std::invalid_argument("Error: Could not load texture config in TextureManager::loadConfig(). Bad file/path. Path: " + path);
+    if (resourceConfig.fail()) {
+        throw std::invalid_argument("Error: Could not load texture config in "
+        "ResourceManager::loadConfig(). Bad file/path. Path provided: " + path);
     }
 
-    while (textureConfig.good()) {
+    while (resourceConfig.good()) {
         const std::string PATH = "PATH";
         const std::string COMMENT = "#";
 
         std::string type;
-        textureConfig >> type;
+        resourceConfig >> type;
         
         if (type == PATH) {
             std::string name;
             std::string path;
 
-            textureConfig >> name >> path;
+            resourceConfig >> name >> path;
             add(name, path);
         } else if (type == COMMENT) {
             // Stores and ignores comment
             std::string storeComment;
-            std::getline(textureConfig, storeComment);
+            std::getline(resourceConfig, storeComment);
         }
     }
 }
 
 /*
  * Appends resource from file to list of resources
- * Pre: path must include a valid texture
- * Post: textureList.size() = textureList.size() + 1
+ * Pre: path must include a valid resource
+ * Post: resourceList.size() = resourceList.size() + 1
  */
 template <typename TGenericResource>
-void ResourceManager<TGenericResource>::add(std::string& name, std::string& path) {
+void ResourceManager<TGenericResource>::add(const std::string& name, const std::string& path) {
     TGenericResource* resource = new TGenericResource;
 
     if (!resource->loadFromFile(path)) {
         throw std::invalid_argument("Error in ResourceManager::add(): could not add" + name
-        + ". Invalid path, wrong type, or corrupted resource: " + path);
+        + ". Invalid path, wrong type, or corrupted resource. Path provided: " + path);
     }
 
     resourceList.emplace(name, resource);
 }
 
 /*
- * Gets texture from name
+ * Gets resource from name
  * Pre: name must exist in list of resource
- *      at least one texture added (textureList.size() > 0)
- * Post: Returns texture pointer
+ *      at least one resource added (resourceList.size() > 0)
+ * Post: Returns resource pointer
  */
 template <typename TGenericResource>
-TGenericResource* ResourceManager<TGenericResource>::getResource(std::string& name) {
+TGenericResource* ResourceManager<TGenericResource>::getResource(const std::string& name) {
     if (resourceList.empty()) {
         throw std::out_of_range("Error in ResourceManager::getResource(): "
-        "No resource were added. textureList.size() must be > 0");
+        "No resource were added. resourceList.size() must be > 0");
     }
 
     if (resourceList.count(name) <= 0) {
-        throw std::invalid_argument("Error: Texture " + name + 
-        " does not exist in added resource");
+        throw std::invalid_argument("Error: Resource " + name + 
+        " does not exist in added resources");
     }
 
     return resourceList.at(name);

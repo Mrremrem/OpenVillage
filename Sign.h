@@ -8,19 +8,16 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include "Entity.h"
+#include "ResourceManager.h"
 #include "CollisionBox.h"
 #include "TextBox.h"
 #include "TileManager.h"
 class Sign : public Entity {
 public:
-    Sign();
+    Sign(ResourceManager<sf::Font>& fonts);
 
     void update();
     void render(sf::RenderWindow& window);
-
-    // For comparisons (used for sorting)
-    /*bool operator<(Entity& other);
-    bool operator==(Entity& other);*/
 
 private:
     TextBox textbox;

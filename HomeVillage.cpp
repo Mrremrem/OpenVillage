@@ -6,17 +6,16 @@
 #include "DebugLog.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
-HomeVillage::HomeVillage(ResourceManager<sf::Texture>& textures, const sf::Vector2f& windowSize):
-worldMap(textures, TILE_CONFIG_DIR) {
+HomeVillage::HomeVillage(ResourceManager<sf::Texture>& textures, 
+ResourceManager<sf::Font>& fonts, 
+const sf::Vector2f& windowSize):
+    worldMap(textures, TILE_CONFIG_DIR),
+    viewDebugLog(fonts) {
 
     //worldMap.addLayer(WORLD_MAP_DIR);
     worldMap.initializeMap(WORLD_MAP_DIR);
     //worldMap.addLwindow.setView(window.getDefaultView());vayer(ENTITY_MAP_DIR);
 } // QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-
-HomeVillage::~HomeVillage() {
-    // Empty
-}
 
 int HomeVillage::getBlockSize() {
     return BLOCK_SIZE;

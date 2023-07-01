@@ -4,8 +4,8 @@
 
 #include "TextBox.h"
 
-TextBox::TextBox():
-fontList() {
+TextBox::TextBox(ResourceManager<sf::Font>& fonts):
+fonts(fonts) {
     // Sets up backdrop with default arguments
     const float DEFAULT_THICKNESS = 6.f;
     const sf::Vector2f DEFAULT_POSITION = sf::Vector2f(1000, 1000);
@@ -17,10 +17,6 @@ fontList() {
     backdropColor = LIGHT_BROWN;
     outlineColor = DARK_BROWN;
     outlineThickness = DEFAULT_THICKNESS;
-
-    fontList.addFont("NovaSquare", "Assets/Fonts/NovaSquare-Regular.ttf");
-    fontList.addFont("DynaPuff", "Assets/Fonts/DynaPuff-VariableFont_wdth,wght.ttf");
-    fontList.addFont("DancingScript", "Assets/Fonts/DancingScript-VariableFont_wght.ttf");
 }
 
 TextBox::~TextBox() {
@@ -113,7 +109,7 @@ void TextBox::newlineText(std::string& text) {
 }
 
 void TextBox::setFont(std::string name) {
-    sf::Font* currentFont = fontList.getFont(name);
+    sf::Font* currentFont = fonts.getResource(name);
     content.setFont(*currentFont);
 }
 

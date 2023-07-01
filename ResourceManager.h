@@ -27,13 +27,13 @@
 template<typename TGenericResource>
 class ResourceManager {
 public:
-    ResourceManager(std::string& configPath);
+    ResourceManager(const std::string& configPath);
     ~ResourceManager();
 
-    void loadConfig(std::string& configPath);
+    void loadConfig(const std::string& configPath);
 
-    void add(std::string& id, std::string& texturePath);
-    TGenericResource* getResource(std::string& id);
+    void add(const std::string& id, const std::string& texturePath);
+    TGenericResource* getResource(const std::string& id);
 private:
     std::unordered_map<std::string, TGenericResource*> resourceList;
 };

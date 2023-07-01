@@ -8,11 +8,11 @@
 #include <SFML/Graphics.hpp>
 #include <cstring>
 #include <vector>
-#include "FontContainer.h"
+#include "ResourceManager.h"
 
 class TextBox {
 public:
-    TextBox();
+    TextBox(ResourceManager<sf::Font>& fonts);
     TextBox(sf::Vector2f position, sf::Vector2f scale);
     ~TextBox();
 
@@ -45,6 +45,11 @@ public:
     sf::Vector2f getSize(); // Gets textbox area in world coords
 
 private:
+    // Font containers
+    ResourceManager<sf::Font>& fonts;
+    sf::Text content;
+    sf::Color fontColor;
+
     // Textbox shape
     sf::RectangleShape backdrop;
 
@@ -54,11 +59,6 @@ private:
     sf::Color backdropColor;
     sf::Color outlineColor;
     float outlineThickness; // Outline girth
-
-    // Font containers
-    FontContainer fontList;
-    sf::Text content;
-    sf::Color fontColor;
 
     // Text config
     const int DEFAULT_CHARACTER_SIZE = 50;

@@ -3,11 +3,12 @@
 //
 
 #include "DebugLog.h"
+#include "ResourceManager.h"
 
-DebugLog::DebugLog() {
-    fontList.addFont("Ubuntu", "Assets/Fonts/Ubuntu-Regular.ttf");
+DebugLog::DebugLog(ResourceManager<sf::Font>& fonts):
+fonts(fonts) {
 
-    sf::Font* currentFont = fontList.getFont("Ubuntu");
+    sf::Font* currentFont = fonts.getResource("Ubuntu_Font");
     content.setFont(*currentFont);
     content.setFillColor(TEXT_COLOR);
 }

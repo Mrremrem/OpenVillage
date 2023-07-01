@@ -14,6 +14,9 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 
+/*
+ * To do: Write comments for GameManager
+ */
 class GameManager {
 public:
     GameManager();
@@ -33,8 +36,12 @@ private:
     WindowManager window;
 
     // Loads up textures
-    std::string TEXTURE_CONFIG_DIR = "Assets/textures_cfg.ini";
+    const std::string TEXTURE_CONFIG_DIR = "Assets/textures_cfg.ini";
     ResourceManager<sf::Texture> textures;
+
+    // Loads up fonts
+    const std::string FONT_CONFIG_DIR = "Assets/fonts_cfg.ini";
+    ResourceManager<sf::Font> fonts;
 
     sf::Clock clock;
     sf::Time elapsedTime;

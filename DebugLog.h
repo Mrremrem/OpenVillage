@@ -8,13 +8,13 @@
 #include <SFML/Graphics.hpp>
 #include <cstring>
 #include <vector>
+#include "ResourceManager.h"
 #include "Player.h"
 #include "WindowManager.h"
-#include "FontContainer.h"
 
 class DebugLog {
 public:
-    DebugLog();
+    DebugLog(ResourceManager<sf::Font>& fonts);
     ~DebugLog();
 
     void add(std::string message);
@@ -25,9 +25,8 @@ public:
 
     void render(sf::RenderWindow& window);
 private:
-    // Delete this later and add to FontContainer: const std::string FONT_DIRECTORY = "";
+    ResourceManager<sf::Font>& fonts;
     sf::Text content;
-    FontContainer fontList;
 
     std::vector<std::string> messages; // Holds debug info
     int size = 0;
