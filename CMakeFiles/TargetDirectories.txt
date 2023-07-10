@@ -1,3 +1,0 @@
-/home/mrremrem/CLionProjects/OpenVillage/CMakeFiles/OpenVillage.dir
-/home/mrremrem/CLionProjects/OpenVillage/CMakeFiles/edit_cache.dir
-/home/mrremrem/CLionProjects/OpenVillage/CMakeFiles/rebuild_cache.dir
