@@ -7,7 +7,7 @@ Hey thanks for stopping by! So I made a simple, open tile game that features a l
 
 # Compiling
 ## Compile in Linux
-### That's right, [Richard](https://old.reddit.com/r/copypasta/comments/7lt7i0/no_richard_its_linux_not_gnulinux/), I said Linux.
+### That's right, [Richard](https://en.wikipedia.org/wiki/GNU/Linux_naming_controversy), I said Linux.
 Anyway, to compile this for the distro you're using, you're gonna want to get these packages from whichever [package manager](https://en.wikipedia.org/wiki/Package_manager) you're using <br />
 * [CMake](https://cmake.org/) (For my organization skills. Highly recommend using the GUI version even if you're a [wm](https://en.wikipedia.org/wiki/Window_manager) user like *moi*)<br />
 * [SFML](https://www.sfml-dev.org/) For the graphics (Most distros will have SFML prebuilt in their repository)<br />
