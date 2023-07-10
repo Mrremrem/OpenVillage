@@ -13,7 +13,7 @@ Player::Player(ResourceManager<sf::Texture>& textures, sf::Vector2f viewSize):
 Entity(EntityType::Player, EntityState::Idle),
 spriteSheet(textures, PLAYER_SHEET_DIR),
 viewSize(viewSize),
-hitBox(false) {
+hitBox(spriteSheet.getSprite(), false) {
     
     const int DEFAULT_SPEED = 5;
     speed = sf::Vector2f(DEFAULT_SPEED, DEFAULT_SPEED);
@@ -57,6 +57,9 @@ void Player::update() {
     // Updates player view
     view.setCenter(spriteSheet.getSprite().getPosition());
     view.setSize(viewSize);
+
+    // Updates hitbox
+    hitBox.update();
 }
 
 /*
@@ -67,7 +70,7 @@ void Player::update() {
 void Player::render(sf::RenderWindow& window) {
     window.setView(view);
     spriteSheet.render(window);
-    //hitBox.render(window);
+    hitBox.render(window);
 }
 
 /*

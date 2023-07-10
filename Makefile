@@ -225,54 +225,6 @@ Entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/Entity.cpp.s
 .PHONY : Entity.cpp.s
 
-EntityManager.o: EntityManager.cpp.o
-.PHONY : EntityManager.o
-
-# target to build an object file
-EntityManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/EntityManager.cpp.o
-.PHONY : EntityManager.cpp.o
-
-EntityManager.i: EntityManager.cpp.i
-.PHONY : EntityManager.i
-
-# target to preprocess a source file
-EntityManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/EntityManager.cpp.i
-.PHONY : EntityManager.cpp.i
-
-EntityManager.s: EntityManager.cpp.s
-.PHONY : EntityManager.s
-
-# target to generate assembly for a file
-EntityManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/EntityManager.cpp.s
-.PHONY : EntityManager.cpp.s
-
-FontContainer.o: FontContainer.cpp.o
-.PHONY : FontContainer.o
-
-# target to build an object file
-FontContainer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/FontContainer.cpp.o
-.PHONY : FontContainer.cpp.o
-
-FontContainer.i: FontContainer.cpp.i
-.PHONY : FontContainer.i
-
-# target to preprocess a source file
-FontContainer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/FontContainer.cpp.i
-.PHONY : FontContainer.cpp.i
-
-FontContainer.s: FontContainer.cpp.s
-.PHONY : FontContainer.s
-
-# target to generate assembly for a file
-FontContainer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenVillage.dir/build.make CMakeFiles/OpenVillage.dir/FontContainer.cpp.s
-.PHONY : FontContainer.cpp.s
-
 GameManager.o: GameManager.cpp.o
 .PHONY : GameManager.o
 
@@ -558,12 +510,6 @@ help:
 	@echo "... Entity.o"
 	@echo "... Entity.i"
 	@echo "... Entity.s"
-	@echo "... EntityManager.o"
-	@echo "... EntityManager.i"
-	@echo "... EntityManager.s"
-	@echo "... FontContainer.o"
-	@echo "... FontContainer.i"
-	@echo "... FontContainer.s"
 	@echo "... GameManager.o"
 	@echo "... GameManager.i"
 	@echo "... GameManager.s"

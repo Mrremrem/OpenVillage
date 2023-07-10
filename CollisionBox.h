@@ -5,9 +5,11 @@
 #ifndef OPENVILLAGE_COLLISIONBOX_H
 #define OPENVILLAGE_COLLISIONBOX_H
 
+#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Transformable.hpp>
 #include <SFML/System/Vector2.hpp>
 
 /*
@@ -20,12 +22,12 @@
 class CollisionBox {
 public:
     // Makes collision box
-    CollisionBox();
+    CollisionBox(sf::Transformable& referenceTexture);
 
     // Draws red outline on collision box if debug == true
-    CollisionBox(bool debug); 
+    CollisionBox(sf::Transformable& referenceTexture, bool debug); 
 
-    void update(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f scale);
+    void update();
     void render(sf::RenderWindow& window);
 
 
@@ -33,6 +35,7 @@ public:
     void setPosition(sf::Vector2f pos);
 private:
     sf::RectangleShape box;
+    sf::Transformable& referenceTexture; // A reference to what has a collision box
     bool debug;
     const float OUTLINE_THICKNESS = .5f;
 };

@@ -1,20 +1,64 @@
 #include "CollisionBox.h"
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
-CollisionBox::CollisionBox() {
-    CollisionBox(false);
+/*
+ * Takes in a reference texture
+ * The reference texture is so that the
+ * collision box can follow the texture for
+ * the rest of its lifetime
+ */
+CollisionBox::CollisionBox(sf::Transformable& referenceTexture):
+referenceTexture(referenceTexture) {
+    CollisionBox(referenceTexture, false);
 }
 
-CollisionBox::CollisionBox(bool debug): 
+/*
+ * Explicitely sets debug mode
+ * Takes in a reference texture
+ * The reference texture is so that the
+ * collision box can follow the texture for
+ * the rest of its lifetime
+ */
+CollisionBox::CollisionBox(sf::Transformable& referenceTexture, bool debug):
+referenceTexture(referenceTexture),
 debug(debug) {
-    box.setFillColor(sf::Color::Transparent);
+    box.setFillColor(sf::Color::Magenta);
 
     if (debug) {
         box.setOutlineColor(sf::Color::Red);
         box.setOutlineThickness(OUTLINE_THICKNESS);
     }
+}
+
+/*
+ * Updates collision box
+ * Pre: none
+ * Post: none
+ */
+void CollisionBox::update() {
+    if (debug) {
+        box.setFillColor(sf::Color(0, 0, 0, 0));
+        box.setOutlineColor(sf::Color::Magenta);
+
+        const int TEMP_SIZE = 16;
+        box.setSize(sf::Vector2f(TEMP_SIZE, TEMP_SIZE));
+        box.setOutlineThickness(1);
+    }
+
+    box.setPosition(referenceTexture.getPosition());
+    box.setScale(referenceTexture.getScale());
+}
+
+/*
+ * Renders collision box
+ * Pre: none
+ * Post: displays collision box on screen (if in debug mode)
+ */
+void CollisionBox::render(sf::RenderWindow& window) {
+    window.draw(box);
 }
 
 /*
@@ -25,17 +69,4 @@ debug(debug) {
  */
 bool CollisionBox::isColliding(CollisionBox& other) {
     return box.getTextureRect().intersects(other.box.getTextureRect());
-}
-
-void CollisionBox::update(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f scale) {
-    //box.setFillColor(sf::Color::Red);
-    //box.setTextureRect(sf::IntRect(0, 0, 16, 16));
-
-    box.setPosition(pos);
-    box.setSize(size);
-    box.setScale(scale);
-}
-
-void CollisionBox::render(sf::RenderWindow& window) {
-    window.draw(box);
 }

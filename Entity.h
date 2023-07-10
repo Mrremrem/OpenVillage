@@ -51,8 +51,6 @@ protected:
     // Entity info
     EntityType entityType;
     EntityState entityState;
-
-    CollisionBox hitBox;
 };
 
 #endif // OPENVILLAGE_ENTITY_H

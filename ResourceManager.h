@@ -20,9 +20,9 @@
  * function that will retrieve the path and load the resource 
  * TGenericResource is a generic type for a resource such as
  * sf::Texture, sf::Font, etc.
- * More types will be supported in the future, I believe that
+ * More types will be supported in the future--I believe that
  * sf::SoundBuffer doesn't have a loadFromFile() function and
- * that (might) get things iffy
+ * that (might) make things iffy
 */
 template<typename TGenericResource>
 class ResourceManager {
