@@ -1,0 +1,4 @@
+# Tiles
+PATH Tile_Textures Assets/Media/Textures/Tile_Textures.png
+# Sprite sheet
+PATH Sprite_Sheet Assets/Media/Textures/Sprite_Sheet.png
