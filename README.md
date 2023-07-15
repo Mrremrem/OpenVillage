@@ -1,9 +1,10 @@
 # OpenVillage
-A village game thing
+A game engine I made with SFML
 ![Github intro image thingy](/Assets/Media/Github_Intro_Image.png)
 
 # Intro
-Hey thanks for stopping by! So I made a simple, open tile game that features a lot of flowers (a grand total of three at the moment). You can move around the world that exists far from the vast oceans and explore all sorts of grass and colorful flowers that stand for nature. Oh and you can also make your own world if you want to take control environmentally/politically (currently in a text file, check out Assets/Media/Maps for an example). So you can see that this project is not just an ordinary project--it is unique in both creativity from me and (in the near, near future) you. Please watch your step as I take you to the compiling section.
+Hey thanks for stopping by! I was planning on writing a game, but then I realized I needed to write an engine first. So I wrote one, and I've decided to make the OpenVillage engine free and open source for everyone! (In case you're wondering, I will be working on the real game after I finish the fundamentals, don't worry :)). But, like I said earlier, I started off with writing a game, so at the moment the engine is filled with pre built game data. BUT--I'll figure out a nice way to organize a way to separate the engine itself with the demo.
+Speaking of demos, I've also made a simple demo that features a lot of flowers (a grand total of three at the moment). You can move around the world that exists far from the vast oceans and explore all sorts of grass and colorful flowers that stand for nature. Oh and you can also make your own world if you want to take control environmentally/politically (currently in a text file, check out Assets/Media/Maps for an example). So you can see that this project is not just an ordinary project--it is unique in both creativity from me and (in the near, near future) you. Please watch your step as I take you to the compiling section.
 
 # Compiling
 ## Compile in Linux
