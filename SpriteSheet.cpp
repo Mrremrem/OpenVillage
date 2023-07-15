@@ -43,6 +43,8 @@ textures(other.textures) {
 
     for (auto otherAnimationIndex : other.animationList) {
         animationList.emplace(otherAnimationIndex.first, otherAnimationIndex.second);
+
+        std::cout << "Running animation.at at SpriteSheet::CopyConstructor()" << std::endl;
         animationList.at(otherAnimationIndex.first).changeBaseSprite(sprite);
     }
 }
@@ -61,7 +63,9 @@ void SpriteSheet::update() {
     //std::cout << "SpriteSheet.cpp: Updating sprite " << name << " with animation " << currentAnimation << " Scale: " << sprite.getScale().x << ", " << sprite.getScale().y << " SpriteSheet.cpp: Sprite address: " << &sprite << std::endl;
     //std::cout << "SpriteSheet.cpp: Updating new sprite " << name << " with sprite address: " << &sprite << std::endl;
     //std::cout << "SpriteSheet.cpp: updating all animations for " << name << " with animationList.size() = " << animationList.size();
+    std::cout << "Running animation.at at SpriteSheet::update()" << std::endl;
     animationList.at(currentAnimation).update();
+    std::cout << "Finished animation.at at SpriteSheet::update()" << std::endl;
     //std::cout << "SpriteSheet update() ends! " << std::endl;
 }
 
@@ -88,11 +92,15 @@ void SpriteSheet::setAnimation(const std::string& animation) {
         }
         
         if (animationList.count(currentAnimation) == 1) {
+            std::cout << "Running animation.at at SpriteSheet::setAnimation()" << std::endl;
             animationList.at(currentAnimation).reset();
+            std::cout << "Finished animation.at at SpriteSheet::setAnimation()" << std::endl;
         }
         
         currentAnimation = animation;
+        std::cout << "Running currentAnimation.at at SpriteSheet::setAnimation()" << std::endl;
         animationList.at(currentAnimation).reset();
+        std::cout << "Finished currentAnimation.at at SpriteSheet::setAnimation()" << std::endl;
     }
 }
 
@@ -145,6 +153,9 @@ void SpriteSheet::loadSheet(const std::string& path) {
 
     //std::cout << "SpriteSheet.cpp:loadSheet: End of adding sheet\n" << std::endl;
     std::cout << "SpriteSheet: Current sprite: " << name << ". Original sprite address: " << &sprite << std::endl;
+    if (name == "Player") {
+        std::cout << "Found player!\'" << std::endl;
+    }
 }
 
 /*
@@ -199,6 +210,7 @@ sf::Sprite& SpriteSheet::getSprite() {
 }
 
 Animation* SpriteSheet::getAnimation(const std::string& animationName) {
+    std::cout << "Running animation.at at SpriteSheet::getAnimation() (return)" << std::endl;
     return &animationList.at(animationName);
 }
 

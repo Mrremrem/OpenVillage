@@ -4,6 +4,7 @@
 
 #include "Map.h"
 #include "Entity.h"
+#include <stdexcept>
 
 /*
  * */
@@ -33,7 +34,7 @@ Map::~Map() {
  */
 void Map::update() {
     // Updates every layer
-    //std::cout << "Update runs!" << std::endl;
+    std::cout << "Update runs!" << std::endl;
     for (auto entityIndex : entityList) {
         entityIndex.second->update();
     }
@@ -45,14 +46,15 @@ void Map::update() {
  * Post: renders map to window
  */
 void Map::render(sf::RenderWindow& window) {
+    std::cout << "Rendering map..." << std::endl;
     //EntityKey playerKey("Player0", 0);
-    Player* redMan = static_cast<Player*>(entityList.at({"PLAYER0", 1}));
-    window.setView(redMan->getView());
+    //Player* redMan = static_cast<Player*>(entityList.at({"PLAYER0", 2}));
+    //window.setView(redMan->getView());
     
     std::cout << "Begin of render... " << std::endl;
     for (auto entityIndex : entityList) {
         entityIndex.second->render(window);
-        std::cout << "Rendering " << entityIndex.first.ID << std::endl;
+        std::cout << "Rendering " << entityIndex.first.ID << "At layer: " << entityIndex.first.layerNum << std::endl;
     }
     std::cout << "End of render \n" << std::endl;
 
@@ -150,7 +152,7 @@ void Map::loadEntity() {
 
 /*
  * Appends entity to map
- * For every entity appeneded that already exists,
+ * For every existing entityName being appended,
  * its postfix is incremented by one.
  * Example: Tile0, Tile1, Tile2, etc.
  * Pre: none
@@ -166,7 +168,10 @@ void Map::appendEntity(std::string& entityName, int layerNum, Entity* entity) {
     EntityKey newEntityKey(newEntityName, layerNum);
 
     entityList.emplace(newEntityKey, entity);
+
+    std::cout << "Running entity.at at Map::appendEntity()" << std::endl;
     entityCountList.at(entityName) = entityCount + 1;
+    std::cout << "Finished entity.at at Map::appendEntity()" << std::endl;
 }
 
 /*

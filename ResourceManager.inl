@@ -101,6 +101,7 @@ TGenericResource* ResourceManager<TGenericResource>::getResource(const std::stri
         " does not exist in added resources");
     }
 
+    
     return resourceList.at(name);
 }
 

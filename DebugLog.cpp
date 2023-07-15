@@ -34,7 +34,9 @@ void DebugLog::insert(int messageIndex, std::string message) {
     } else if (messageIndex == numOfMessages()) {
         add(message);
     } else {
+        std::cout << "Appending message in DebugLog::insert()" << std::endl;
         messages.at(messageIndex) = message;
+        std::cout << "Finished message.at at DebugLog::insert()" << std::endl;
     }
 }
 

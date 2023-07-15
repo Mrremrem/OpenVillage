@@ -38,8 +38,9 @@ void Animation::update() {
             if (frameIndex >= frameList.size()) {
                 frameIndex = 0;
             }
-
+            std::cout << "Running frame.at at Animation::update()" << std::endl;
             Frame* nextFrame = &frameList.at(frameIndex);
+            std::cout << "Finished frame.at at Animation::update()" << std::endl;
             sprite->setTextureRect(nextFrame->area);
             elapsed -= currentFrame->duration;
         }

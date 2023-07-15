@@ -5,7 +5,13 @@
 #include "TileManager.h"
 #include "Entity.h"
 #include <SFML/System/Vector2.hpp>
+#include <stdexcept>
 
+/*
+ * Reads config file for Tiles
+ * Pre: none
+ * Post: sets each Tile's attributes from config
+ */
 TileManager::TileManager(ResourceManager<sf::Texture>& textures, const std::string& tileInfoPath):
 textures(textures),
 tilesFile(tileInfoPath) {
@@ -17,14 +23,33 @@ tilesFile(tileInfoPath) {
     setupConfig();
 }
 
+/*
+ * Gets Tile from ID
+ * Pre: tileList.size() > 0,
+ *      tileList.count(ID) > 0
+ * Post: Returns tile at tileList
+ */
 Tile TileManager::getTile(const std::string& ID) {
     if (tileList.size() == 0) {
         throw std::out_of_range("Error: Could not load tile ID " + ID);
     }
 
-    return tileList.at(ID);
+    std::cout << "Running tile.at at TileManager::getTile() (return)" << std::endl;
+
+    auto tileListIt = tileList.find(ID);
+    if (tileListIt == tileList.end()) {
+        throw std::out_of_range("Error in TileManager::getTile(): No such Tile with ID " + ID);
+    }
+
+    return tileListIt->second;
 }
 
+/*
+ * Sets up Tile config
+ * Pre: none
+ * Post: Stores each Tile's attributes from
+ * config file
+ */
 void TileManager::setupConfig() {
     // Stores tiles info |id|name| etc.
     std::string tileLine;
@@ -44,6 +69,12 @@ void TileManager::setupConfig() {
     }
 }
 
+/*
+ * Sets a single Tile from the next
+ * Tile config stream
+ * Pre: none
+ * Post: none
+ */
 void TileManager::setTile() {
     // Gets line information
     std::string ID;
