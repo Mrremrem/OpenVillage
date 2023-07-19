@@ -2,8 +2,8 @@
 // Created by mrremrem on 7/3/22.
 //
 
-#ifndef OPENVILLAGE_TileManager_H
-#define OPENVILLAGE_TileManager_H
+#ifndef OPENVILLAGE_TILEMANAGER_H
+#define OPENVILLAGE_TILEMANAGER_H
 
 #include "SpriteSheet.h"
 #include "ResourceManager.h"
@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif //OPENVILLAGE_TileManager_H
+#endif //OPENVILLAGE_TILEMANAGER_H

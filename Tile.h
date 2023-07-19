@@ -3,6 +3,9 @@
 // struct to a full blown class).
 //
 
+#ifndef OPENVILLAGE_TILE_H
+#define OPENVILLAGE_TILE_H
+
 #include "ResourceManager.h"
 #include "Entity.h"
 #include "SpriteSheet.h"
@@ -47,3 +50,5 @@ private:
 
     SpriteSheet spriteSheet;
 };
+
+#endif

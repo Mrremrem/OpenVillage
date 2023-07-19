@@ -14,39 +14,12 @@
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
+#include "EntityManager.h"
 #include "ResourceManager.h"
 #include "TileManager.h"
 #include "Entity.h"
 #include "Player.h"
 #include "Sign.h"
-
-/*
- * Key for entityList
- * Used for sorting entities by layers/ID
- */
-struct EntityKey {
-    EntityKey(std::string ID, int layerNum):
-    ID(ID),
-    layerNum(layerNum) {}
-
-    std::string ID;
-    int layerNum;
-};
-
-/*
- * Comparator for EntityKey
- * Used for comparing two EntityKeys
- */
-struct EntityKeyComparator {
-    template<typename TArbitraryKey>
-    bool operator()(TArbitraryKey& key1, TArbitraryKey& key2) {
-        if (key1.layerNum != key2.layerNum) {
-            return key1.layerNum < key2.layerNum;
-        } 
-        
-        return key1.ID < key2.ID;
-    }
-};
 
 /*
  * Stores maps and renders them
@@ -70,7 +43,6 @@ private:
 
     void loadMapData(); // Loads map from data file
     void loadEntity(); // Loads entity from data file
-    void appendEntity(std::string& entityName, int layer, Entity* entity); // Adds entity to list
     void initEntityPos(Entity& entity, int posX, int posY);
 
     //bool compareEntities(Entity& Entity1, Entity& Entity2);
@@ -80,9 +52,7 @@ private:
     ResourceManager<sf::Texture>& textures;
     TileManager tiles;
 
-    // Hold entities. Keys are Entity ID, Entity name
-    std::map<EntityKey, Entity*, EntityKeyComparator> entityList;
-    std::unordered_map<std::string, int> entityCountList; // Holds # of entities available
+    EntityManager entityList;
     
     std::ifstream mapFile;
 };

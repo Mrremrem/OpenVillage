@@ -129,10 +129,6 @@ bool EntityManager::setLayer(const std::string& entityID, int layerNum) {
     entityList.emplace(copyEntityKey, entityCopy);
 }
 
-std::map<EntityKey, Entity*>::iterator EntityManager::getIterator() {
-    return entityList.begin();
-}
-
 /*
  * Returns beginning of entityList iterator
  * This iterator comes from the map container itself

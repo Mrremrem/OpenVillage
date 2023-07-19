@@ -43,8 +43,6 @@ textures(other.textures) {
 
     for (auto otherAnimationIndex : other.animationList) {
         animationList.emplace(otherAnimationIndex.first, otherAnimationIndex.second);
-
-        std::cout << "Running animation.at at SpriteSheet::CopyConstructor()" << std::endl;
         animationList.at(otherAnimationIndex.first).changeBaseSprite(sprite);
     }
 }

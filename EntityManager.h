@@ -20,22 +20,20 @@ public:
     ID(ID),
     layerNum(layerNum) {}
 
+    /*
+     * Comparator for EntityKey
+     * Used for comparing two EntityKeys
+     */
+    const bool operator<(const EntityKey& other) const {
+        if (layerNum != other.layerNum) {
+            return layerNum < other.layerNum;
+        }
+        return ID < other.ID;
+    }
+    
+private:
     std::string ID;
     int layerNum;
-};
-
-/*
- * Comparator for EntityKey
- * Used for comparing two EntityKeys
- */
-struct EntityKeyComparator {
-    const bool operator()(const EntityKey& key1, const EntityKey& key2) {
-        if (key1.layerNum != key2.layerNum) {
-            return key1.layerNum < key2.layerNum;
-        } 
-        
-        return key1.ID < key2.ID;
-    }
 };
 
 /*
@@ -61,7 +59,7 @@ public:
     std::map<EntityKey, Entity*>::iterator end();
 private:
     // Hold entities. Keys are Entity ID, Entity name. Sorts entities by layerNum's
-    std::map<EntityKey, Entity*, EntityKeyComparator> entityList;
+    std::map<EntityKey, Entity*> entityList;
 
     std::unordered_map<std::string, int> entityCountList; // Holds # of entities made in lifetime
     std::unordered_map<std::string, int> entityLayerList; // Holds each entity's layerNum

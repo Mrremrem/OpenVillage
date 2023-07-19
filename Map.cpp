@@ -21,10 +21,7 @@ tiles(textures, tileInfoPath) {
  * Post: entityLayerList.size() = 0
  */
 Map::~Map() {
-    for (auto entityIndex : entityList) {
-        delete entityIndex.second;
-        entityIndex.second = nullptr;
-    }
+    
 }
 
 /*
@@ -47,16 +44,15 @@ void Map::update() {
  */
 void Map::render(sf::RenderWindow& window) {
     std::cout << "Rendering map..." << std::endl;
-    //EntityKey playerKey("Player0", 0);
-    //Player* redMan = static_cast<Player*>(entityList.at({"PLAYER0", 2}));
-    //window.setView(redMan->getView());
+    Player* redMan = static_cast<Player*>(entityList.get("PLAYER#0"));
+    window.setView(redMan->getView());
     
-    std::cout << "Begin of render... " << std::endl;
+    std::cout << "Begin of render... \n" << std::endl;
     for (auto entityIndex : entityList) {
         entityIndex.second->render(window);
-        std::cout << "Rendering " << entityIndex.first.ID << "At layer: " << entityIndex.first.layerNum << std::endl;
+        //std::cout << "Rendering " << entityIndex.first.ID << " At layer: " << entityIndex.first.layerNum << std::endl;
     }
-    std::cout << "End of render \n" << std::endl;
+    std::cout << "\nEnd of render \n" << std::endl;
 
     
     /*std::cout << "View X: " << redMan->getView().getCenter().x << 
@@ -138,7 +134,7 @@ void Map::loadEntity() {
         newPlayer->setScale(spriteScale);
         newPlayer->setAnimation(animationType);
         
-        appendEntity(ID, currentLayer, newPlayer);
+        entityList.add(ID, currentLayer, newPlayer);
     } else { // Has to be a Tile
         Tile* newTile = new Tile(tiles.getTile(ID));
         
@@ -146,32 +142,8 @@ void Map::loadEntity() {
         newTile->setPosition(sf::Vector2f(posX * spriteDistance, posY * spriteDistance));
         newTile->setAnimation(animationType);
 
-        appendEntity(ID, currentLayer, newTile);
+        entityList.add(ID, currentLayer, newTile);
     }
-}
-
-/*
- * Appends entity to map
- * For every existing entityName being appended,
- * its postfix is incremented by one.
- * Example: Tile0, Tile1, Tile2, etc.
- * Pre: none
- * Post: entityList.size() = entityList.size() + 1
- */
-void Map::appendEntity(std::string& entityName, int layerNum, Entity* entity) {
-    if (entityCountList.find(entityName) == entityCountList.end()) {
-        entityCountList.emplace(entityName, 0);
-    }
-
-    int entityCount = entityCountList.at(entityName);
-    std::string newEntityName = entityName + std::to_string(entityCount);
-    EntityKey newEntityKey(newEntityName, layerNum);
-
-    entityList.emplace(newEntityKey, entity);
-
-    std::cout << "Running entity.at at Map::appendEntity()" << std::endl;
-    entityCountList.at(entityName) = entityCount + 1;
-    std::cout << "Finished entity.at at Map::appendEntity()" << std::endl;
 }
 
 /*
