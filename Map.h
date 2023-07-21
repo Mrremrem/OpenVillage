@@ -45,6 +45,9 @@ private:
     void loadEntity(); // Loads entity from data file
     void initEntityPos(Entity& entity, int posX, int posY);
 
+    // Appends entities with incrementing postfixes
+    void appendEntity(const std::string& entityName, int layerNum, Entity* entity);
+
     //bool compareEntities(Entity& Entity1, Entity& Entity2);
 
     bool outOfBounds(int posX, int posY);

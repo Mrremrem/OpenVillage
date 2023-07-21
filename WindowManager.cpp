@@ -5,6 +5,8 @@
 #include "WindowManager.h"
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/Window/WindowStyle.hpp>
 
 // Creates a default 640x480 window
 WindowManager::WindowManager() {
@@ -50,7 +52,7 @@ void WindowManager::update() {
     sf::Event event;
     // Processes all events
     while (window.pollEvent(event)){
-        if (event.type == sf::Event::Closed){
+        if (event.type == sf::Event::Closed) {
             isWindowTerminated = true;
         } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5){
             toggleFullScreen();
@@ -86,7 +88,10 @@ sf::RenderWindow* WindowManager::getRenderWindow() {
 // Creates window
 void WindowManager::create() {
     auto style = (isWindowFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
-    window.create({ windowSize.x, windowSize.y, 32}, windowTitle, style);
+    window.create(sf::VideoMode::getDesktopMode(), windowTitle, style);
+
+    const int BITS_PER_PIXEL = 32;
+    window.create({ windowSize.x, windowSize.y, BITS_PER_PIXEL}, windowTitle, style);
 }
 
 // Closes window

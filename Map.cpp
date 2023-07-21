@@ -44,13 +44,11 @@ void Map::update() {
  */
 void Map::render(sf::RenderWindow& window) {
     std::cout << "Rendering map..." << std::endl;
-    Player* redMan = static_cast<Player*>(entityList.get("PLAYER#0"));
-    window.setView(redMan->getView());
     
     std::cout << "Begin of render... \n" << std::endl;
     for (auto entityIndex : entityList) {
         entityIndex.second->render(window);
-        //std::cout << "Rendering " << entityIndex.first.ID << " At layer: " << entityIndex.first.layerNum << std::endl;
+        std::cout << "Rendering " << entityIndex.first.getID() << " At layer: " << entityIndex.first.getLayerNum() << std::endl;
     }
     std::cout << "\nEnd of render \n" << std::endl;
 
@@ -133,6 +131,7 @@ void Map::loadEntity() {
         newPlayer->setPosition(sf::Vector2f(posX * spriteDistance, posY * spriteDistance));
         newPlayer->setScale(spriteScale);
         newPlayer->setAnimation(animationType);
+        newPlayer->getView();
         
         entityList.add(ID, currentLayer, newPlayer);
     } else { // Has to be a Tile
@@ -164,6 +163,15 @@ void Map::initEntityPos(Entity& entity, int posX, int posY) {
     // Sets tile sprite based on ID
     int spriteDistance = spriteSize.x * spriteScale.y;
     entity.setPosition(sf::Vector2f(posX * spriteDistance, posY * spriteDistance));
+}
+
+/*
+ * Appends entity to entityList
+ * Pre: none
+ * Post: entityList.size() = entityList.size() + 1
+ */
+void Map::appendEntity(const std::string& entityName, int layerNum, Entity* entity) {
+    
 }
 
 /*

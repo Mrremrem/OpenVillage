@@ -37,6 +37,7 @@ void EntityManager::add(const std::string& entityName, int layerNum, Entity* ent
     std::string newEntityName = entityName + NUMBER_SYMBOL + std::to_string(entityCount);
     
     EntityKey newEntityKey(newEntityName, layerNum);
+    newEntityKey.entityType = entity->getID();
     entityList.emplace(newEntityKey, entity);
 
     entityCountList.at(entityName) = entityCount + 1; // No checks needed
@@ -127,6 +128,34 @@ bool EntityManager::setLayer(const std::string& entityID, int layerNum) {
     entityLayerListIt->second = layerNum;
     EntityKey copyEntityKey(entityID, layerNum);
     entityList.emplace(copyEntityKey, entityCopy);
+}
+
+/*
+ * Returns # of entities made
+ * Pre: none
+ * Post: Returns entityList.size()
+ */
+int EntityManager::size() {
+    return entityList.size();
+}
+
+/*
+ * Gets # of entities created with entityType 
+ * in EntityManager's lifetime
+ * Useful for making arbitrary entities with 
+ * incrementing postfixes for ID's
+ * Pre: none
+ * Post: Returns # of entityTypes ever made
+ */
+int EntityManager::getLifetimeTypeCount(const std::string &entityType) {
+    auto entityTypeCount = entityCountList.find(entityType);
+
+    if (entityTypeCount == entityLayerList.end()) {
+        throw std::runtime_error("Error in EntityManager::getLifetimeTypeCount: "
+        "unknown entityType: " + entityType);
+    }
+
+    return entityTypeCount->second;
 }
 
 /*

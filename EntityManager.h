@@ -20,6 +20,9 @@ public:
     ID(ID),
     layerNum(layerNum) {}
 
+    const std::string& getID() const { return ID; }
+    const int getLayerNum() const { return layerNum; }
+
     /*
      * Comparator for EntityKey
      * Used for comparing two EntityKeys
@@ -31,9 +34,12 @@ public:
         return ID < other.ID;
     }
     
+    // For static casts. Types can be Player, Flower, Sign, etc. Entity by default
+    std::string entityType = "Entity";
 private:
-    std::string ID;
-    int layerNum;
+    std::string ID; // Unique ID. Example: Player_RedMan
+
+    int layerNum; // Layer number for drawing on window. Also used for sorting.
 };
 
 /*
@@ -52,7 +58,10 @@ public:
 
     bool setLayer(const std::string& entityID, int layerNum); // Changes layer
 
-    std::map<EntityKey, Entity*>::iterator getIterator();
+    int size(); // Returns # of entities stored
+
+    // Gets # of entities created with entityType in EntityManager's lifetime
+    int getLifetimeTypeCount(const std::string& entityType);
 
     // For iterations
     std::map<EntityKey, Entity*>::iterator begin();

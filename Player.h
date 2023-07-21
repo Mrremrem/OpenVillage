@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
 #include "Directions.h"
 #include "CollisionBox.h"
 #include "Entity.h"
@@ -33,6 +34,7 @@ public:
     void setScale(sf::Vector2f scale); // Sets player scale
     void setSpeed(sf::Vector2f speed); // Sets player speed
     void setAnimation(const std::string& animation); // Sets sprite animation
+    void setViewSize(sf::Vector2f size); // Sets player view size
     //void setLayerNum(int layerNum); // Sets player's layer
 
     sf::Vector2f getPosition(); // Gets player position

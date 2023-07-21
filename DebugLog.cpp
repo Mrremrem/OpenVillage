@@ -24,7 +24,7 @@ void DebugLog::add(std::string message) {
 
 /*
  * Inserts debug message in container
- * Pre: messageIndex <= numOfMessages()
+ * Pre: 0 <= messageIndex <= numOfMessages()
  * Post: numOfMessages() = numOfMessages + 1
  */
 void DebugLog::insert(int messageIndex, std::string message) {

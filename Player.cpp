@@ -133,6 +133,15 @@ void Player::setAnimation(const std::string& animation) {
 }
 
 /*
+ * Sets player view size
+ * Pre: none
+ * Post: view.getSize() = size
+ */
+void Player::setViewSize(sf::Vector2f size) {
+    view.setSize(size);
+}
+
+/*
  * Sets player's layer
  * Pre: layerNum >= 0
  * Post: this->layerNum = layerNum
