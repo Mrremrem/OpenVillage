@@ -171,7 +171,17 @@ void Map::initEntityPos(Entity& entity, int posX, int posY) {
  * Post: entityList.size() = entityList.size() + 1
  */
 void Map::appendEntity(const std::string& entityName, int layerNum, Entity* entity) {
-    
+    std::string newEntityName = entityName;
+
+    // Names entity with postfix '#'
+    const char NUMBER_SYMBOL = '#';
+    newEntityName += NUMBER_SYMBOL; 
+
+    // Appends typeCount as postfix for entity's unique ID
+    int entityCount = entityList.getLifetimeTypeCount(entity->getType());
+    newEntityName += std::to_string(entityCount);
+
+    entityList.add(entityName, layerNum, entity);
 }
 
 /*

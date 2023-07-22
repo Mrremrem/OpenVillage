@@ -20,6 +20,8 @@ public:
     ID(ID),
     layerNum(layerNum) {}
 
+    void setType(const std::string& entityType);
+
     const std::string& getID() const { return ID; }
     const int getLayerNum() const { return layerNum; }
 
@@ -33,45 +35,54 @@ public:
         }
         return ID < other.ID;
     }
-    
-    // For static casts. Types can be Player, Flower, Sign, etc. Entity by default
-    std::string entityType = "Entity";
 private:
     std::string ID; // Unique ID. Example: Player_RedMan
-
     int layerNum; // Layer number for drawing on window. Also used for sorting.
 };
 
 /*
  * Base EntityManager class
  * Holds each entity, and creates unique names
- * when added to list. */
+ * when added to list. 
+ */
 class EntityManager {
 public:
     EntityManager();
     ~EntityManager();
 
-    void add(const std::string& entityName, int layer, Entity* entity); // Appends entity to list
-    bool remove(const std::string& entityID); // Removes entity from list
+    void add(const std::string& entityID, int layerNum, Entity* entity); // Appends entity to list
+    void remove(const std::string& entityID); // Removes entity from list
 
     Entity* get(const std::string& entityID); // Gets entity by ID, returns nullptr if not present
 
     bool setLayer(const std::string& entityID, int layerNum); // Changes layer
 
+    int getLayerNum(const std::string& entityID);
+
     int size(); // Returns # of entities stored
 
+    int getTotalTypeCount(EntityType type); // Gets total number of types available
+
     // Gets # of entities created with entityType in EntityManager's lifetime
-    int getLifetimeTypeCount(const std::string& entityType);
+    int getLifetimeTypeCount(EntityType type);
 
     // For iterations
     std::map<EntityKey, Entity*>::iterator begin();
     std::map<EntityKey, Entity*>::iterator end();
 private:
-    // Hold entities. Keys are Entity ID, Entity name. Sorts entities by layerNum's
+    void incrementCounters(EntityType type); // Increments type from lifetimeTypeCountList
+    bool decrementTypeCounter(EntityType type); // Decrements counter for type in typeCountList
+
+
+
+    // Hold entities. Refer to EntityKey for doc. Sorts entities by layerNum's
     std::map<EntityKey, Entity*> entityList;
 
-    std::unordered_map<std::string, int> entityCountList; // Holds # of entities made in lifetime
-    std::unordered_map<std::string, int> entityLayerList; // Holds each entity's layerNum
+    // Counters
+    std::unordered_map<EntityType, int> typeCountList; // Holds each # of types in total
+    std::unordered_map<EntityType, int> lifetimeTypeCountList; // Holds # of types during lifetime
+
+    std::unordered_map<std::string, int> layerNumList; // Holds each entity's layerNum
 };
 
 #endif //OPENVILLAGE_ENTITYMANAGER_H

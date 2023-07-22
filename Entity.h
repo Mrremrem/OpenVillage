@@ -13,12 +13,23 @@
 #include <vector>
 #include "CollisionBox.h"
 
+/*
+ * List of entity types
+ * Update this enum every time you introduce
+ * a new type. It's better to have it as
+ * enums than strings since you'll have to 
+ * manually type check when casting.
+ */
 enum class EntityType {
     Base,
-    Enemy,
-    Player
+    Tile,
+    Player,
+    Sign
 };
 
+/*
+ * Current entity state
+ */
 enum class EntityState {
     Idle, Walking, Jumping, Attacking, Hurt, Dying
 };
@@ -39,12 +50,12 @@ public:
 
     virtual void setPosition(sf::Vector2f position) = 0; // Sets entity's position
 
-    virtual const bool isColliding(Entity& other) = 0;
-    virtual const std::string getID() = 0;
-    //virtual const int getLayerNum() = 0;
+    virtual const bool isColliding(Entity& other) = 0; // Tests if entity is colliding with other
 
-    /*virtual bool operator<(Entity& other) = 0;
-    virtual bool operator==(Entity& other) = 0;*/
+    virtual const std::string getID() = 0; // Gets unique ID
+
+    EntityType getType(); // Gets entity type. Used for casting
+    EntityState getState();
 protected:
     sf::Vector2f position;
 

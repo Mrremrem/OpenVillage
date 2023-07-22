@@ -25,57 +25,42 @@ EntityManager::~EntityManager() {
  * Pre: none
  * Post: entityList.size() = entityList.size() + 1
  */
-void EntityManager::add(const std::string& entityName, int layerNum, Entity* entity) {
-    if (entityCountList.find(entityName) == entityCountList.end()) {
-        entityCountList.emplace(entityName, 0);
-    }
-
-    int entityCount = entityCountList.at(entityName);
-
-    // Names entity with # + entity count
-    const char NUMBER_SYMBOL = '#';
-    std::string newEntityName = entityName + NUMBER_SYMBOL + std::to_string(entityCount);
-    
-    EntityKey newEntityKey(newEntityName, layerNum);
-    newEntityKey.entityType = entity->getID();
+void EntityManager::add(const std::string& entityID, int layerNum, Entity* entity) {
+    EntityKey newEntityKey(entityID, layerNum);
     entityList.emplace(newEntityKey, entity);
 
-    entityCountList.at(entityName) = entityCount + 1; // No checks needed
+    incrementCounters(entity->getType());
     
     // Stores layerNum from entity
-    entityLayerList.emplace(newEntityName, layerNum);
+    layerNumList.emplace(entityID, layerNum);
 }
 
 /*
  * Removes entity from entityList
  * Pre: none
  * Post: 
- * entityList.size() = entityList.size() - 1
- *  ^ if entityID is present,
- * returns true if present and removed,
- * false otherwise
+ * entityList.size() = entityList.size() - 1 if 
+ * entityID is present. Throws error otherwise
  */
-bool EntityManager::remove(const std::string& entityID) {
-    auto entityLayerListIt = entityLayerList.find(entityID);
-    if (entityLayerListIt == entityLayerList.end()) {
-        return false;
+void EntityManager::remove(const std::string& entityID) {
+    // layerNum is needed to access entityList, might as well use it as a check
+    auto layerNumListIt = layerNumList.find(entityID);
+    if (layerNumListIt == layerNumList.end()) {
+        throw std::runtime_error("Error in EntityManager::remove(): entity with ID " 
+        + entityID + " does not exist.");
     }
     
-    auto entityListIt = entityList.find({entityID, entityLayerListIt->second});
-    entityLayerList.erase(entityLayerListIt);
+    // Retreives entity now that we have layerNum, layerNum is no longer needed
+    auto entityListIt = entityList.find({entityID, layerNumListIt->second});
+    layerNumList.erase(layerNumListIt);
     if (entityListIt == entityList.end()) {
-        /* 
-         * This isn't supposed to run--ever
-         * (if entityID is present in entityLayerList, 
-         * it has to be present in entityList)
-         */
+        // This isn't supposed to run... ever
         throw std::runtime_error("(CRITICAL) Error in EntityManager::remove(): "
         "Entity was never added for " + entityID + ". Good luck.");
     }
 
+    decrementTypeCounter(entityListIt->second->getType());
     entityList.erase(entityListIt);
-
-    return true;
 } 
 
 /*
@@ -86,12 +71,12 @@ bool EntityManager::remove(const std::string& entityID) {
  */
 Entity* EntityManager::get(const std::string& entityID) {
     // Tests if entityID is present
-    auto entityLayerListIt = entityLayerList.find(entityID);
-    if (entityLayerListIt == entityLayerList.end()) {
+    auto layerNumListIt = layerNumList.find(entityID);
+    if (layerNumListIt == layerNumList.end()) {
         return nullptr;
     }
 
-    return entityList.at({entityID, entityLayerListIt->second});
+    return entityList.at({entityID, layerNumListIt->second});
 }
 
 /*
@@ -101,19 +86,19 @@ Entity* EntityManager::get(const std::string& entityID) {
  * changed
  */
 bool EntityManager::setLayer(const std::string& entityID, int layerNum) {
-    auto entityLayerListIt = entityLayerList.find(entityID);
-    if (entityLayerListIt == entityLayerList.end()) {
+    auto layerNumListIt = layerNumList.find(entityID);
+    if (layerNumListIt == layerNumList.end()) {
         throw std::runtime_error("Error in EntityManager::setLayer: entity" + entityID
         + " not found");
-    } else if (entityLayerListIt->second == layerNum) {
+    } else if (layerNumListIt->second == layerNum) {
         return false;
     }
 
-    auto entityListIt = entityList.find({entityID, entityLayerListIt->second});
+    auto entityListIt = entityList.find({entityID, layerNumListIt->second});
     if (entityListIt == entityList.end()) {
         /* 
          * This isn't supposed to run--ever
-         * (if entityID is present in entityLayerList, 
+         * (if entityID is present in layerNumList, 
          * it has to be present in entityList)
          */
         throw std::runtime_error("(CRITICAL) Error in EntityManager::setLayer(): "
@@ -125,9 +110,25 @@ bool EntityManager::setLayer(const std::string& entityID, int layerNum) {
     entityList.erase(entityListIt);
 
     // Edits entity's layerNum, then stores entity back in list
-    entityLayerListIt->second = layerNum;
+    layerNumListIt->second = layerNum;
     EntityKey copyEntityKey(entityID, layerNum);
     entityList.emplace(copyEntityKey, entityCopy);
+}
+
+/*
+ * Returns layerNum for entity
+ * Pre: entityID must exist in entityList
+ * Post: Returns layerNum for entityID
+ */
+int EntityManager::getLayerNum(const std::string& entityID) {
+    auto layerNumListIt = layerNumList.find(entityID);
+
+    if (layerNumListIt == layerNumList.end()) {
+        throw std::runtime_error("Error in EntityManager::getLayerNum(): entity" 
+        + entityID + " does not exist");
+    }
+
+    return layerNumListIt->second;
 }
 
 /*
@@ -140,6 +141,18 @@ int EntityManager::size() {
 }
 
 /*
+ * Gets total # of types in entityList
+ * Pre: None
+ * Post: Returns # of type(s) made
+ */
+int EntityManager::getTotalTypeCount(EntityType type) {
+    auto typeCountIt = typeCountList.find(type);
+
+    // Has to be zero if type isn't present
+    return (typeCountIt == lifetimeTypeCountList.end()) ? 0 : typeCountIt->second;
+}
+
+/*
  * Gets # of entities created with entityType 
  * in EntityManager's lifetime
  * Useful for making arbitrary entities with 
@@ -147,15 +160,11 @@ int EntityManager::size() {
  * Pre: none
  * Post: Returns # of entityTypes ever made
  */
-int EntityManager::getLifetimeTypeCount(const std::string &entityType) {
-    auto entityTypeCount = entityCountList.find(entityType);
+int EntityManager::getLifetimeTypeCount(EntityType type) {
+    auto typeCountIt = lifetimeTypeCountList.find(type);
 
-    if (entityTypeCount == entityLayerList.end()) {
-        throw std::runtime_error("Error in EntityManager::getLifetimeTypeCount: "
-        "unknown entityType: " + entityType);
-    }
-
-    return entityTypeCount->second;
+    // Has to be zero if type isn't present
+    return (typeCountIt == lifetimeTypeCountList.end()) ? 0 : typeCountIt->second;
 }
 
 /*
@@ -176,4 +185,43 @@ std::map<EntityKey, Entity*>::iterator EntityManager::begin() {
  */
 std::map<EntityKey, Entity*>::iterator EntityManager::end() {
     return entityList.end();
+}
+
+/*
+ * Helper method for typeCountList and lifetimeTypeCountList
+ * Increments counter for type by one
+ * Pre: None
+ * Post: lifetimeTypeCountList.at(type) = lifetimeTypeCountList.at(type) + 1
+ */
+void EntityManager::incrementCounters(EntityType type) {
+    auto typeCounterIt = typeCountList.find(type);
+
+    if (typeCounterIt == typeCountList.end()) {
+        typeCounterIt = typeCountList.emplace(type, 0).first;
+    }
+
+    auto lifetimeTypeCounterIt = lifetimeTypeCountList.find(type);
+
+    if (lifetimeTypeCounterIt == lifetimeTypeCountList.end()) {
+        lifetimeTypeCounterIt = lifetimeTypeCountList.emplace(type, 0).first;
+    }
+
+    lifetimeTypeCounterIt->second = lifetimeTypeCounterIt->second + 1;
+}
+
+/*
+ * Decrements counter for typeCountList
+ * Pre: None
+ * Post: Returns true if type's counter was changed
+ * typeCountList.at(type) = typeCountList.at(type) - 1 if 
+ * type exists in counter
+ */
+bool EntityManager::decrementTypeCounter(EntityType type) {
+    auto typeCounterIt = typeCountList.find(type);
+
+    if (typeCounterIt == typeCountList.end()) {
+        return false;
+    }
+
+    typeCounterIt->second = typeCounterIt->second - 1;
 }
