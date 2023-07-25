@@ -5,12 +5,14 @@
 #include "HomeVillage.h"
 #include "DebugLog.h"
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <SFML/System/Vector2.hpp>
 HomeVillage::HomeVillage(ResourceManager<sf::Texture>& textures, 
 ResourceManager<sf::Font>& fonts, 
-const sf::Vector2f& windowSize):
-    worldMap(textures, TILE_CONFIG_DIR),
-    viewDebugLog(fonts) {
+std::vector<sf::View>& playerViews):
+    worldMap(textures, TILE_CONFIG_DIR, playerViews),
+    viewDebugLog(fonts),
+    playerViews(playerViews) {
 
     //worldMap.addLayer(WORLD_MAP_DIR);
     worldMap.initializeMap(WORLD_MAP_DIR);

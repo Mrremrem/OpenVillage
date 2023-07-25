@@ -13,6 +13,7 @@
 #include "DebugLog.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <vector>
 
 /*
  * To do: Write comments for GameManager
@@ -46,6 +47,8 @@ private:
     sf::Clock clock;
     sf::Time elapsedTime;
     const int MAX_FPS = 60;
+
+    std::vector<sf::View> playerViews;
 
     HomeVillage homeVillage;
 

@@ -8,7 +8,7 @@ GameManager::GameManager():
 window("Open Village", WINDOW_SIZE),
 textures(TEXTURE_CONFIG_DIR),
 fonts(FONT_CONFIG_DIR),
-homeVillage(textures, fonts, sf::Vector2f(WINDOW_SIZE)) {
+homeVillage(textures, fonts, playerViews) {
     elapsedTime = clock.restart();
 
     // Initializes player stats
@@ -55,9 +55,6 @@ void GameManager::render() {
     window.beginDraw();
 
     homeVillage.render(*window.getRenderWindow());
-    /*redMan.render(*window.getRenderWindow());
-    playerDebug.render(*window.getRenderWindow());*/
-
 
     window.endDraw();
 }

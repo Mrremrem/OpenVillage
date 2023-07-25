@@ -35,7 +35,7 @@ public:
     void setPosition(sf::Vector2f pos);
 private:
     sf::RectangleShape box;
-    sf::Transformable& referenceTexture; // A reference to what has a collision box
+    sf::Transformable& referenceTexture; // A reference to 
     bool debug;
     const float OUTLINE_THICKNESS = .5f;
 };

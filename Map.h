@@ -8,12 +8,14 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <string>
 #include <map>
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
+#include <vector>
 #include "EntityManager.h"
 #include "ResourceManager.h"
 #include "TileManager.h"
@@ -27,7 +29,8 @@
 class Map {
 public:
     // Forms map from path and stores tile info
-    Map(ResourceManager<sf::Texture>& textures, const std::string& tileInfoPath);
+    Map(ResourceManager<sf::Texture>& textures, const std::string& tileInfoPath, 
+    std::vector<sf::View>& playerViews);
     ~Map();
 
     void update();// Updates entities
@@ -56,6 +59,7 @@ private:
     TileManager tiles;
 
     EntityManager entityList;
+    std::vector<sf::View>& playerViews;
     
     std::ifstream mapFile;
 };

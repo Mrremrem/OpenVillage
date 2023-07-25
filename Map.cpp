@@ -4,13 +4,21 @@
 
 #include "Map.h"
 #include "Entity.h"
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <stdexcept>
 
 /*
- * */
-Map::Map(ResourceManager<sf::Texture>& textures, const std::string& tileInfoPath):
+ * Map constructor, initializes textures, tiles,
+ * and player views
+ * Pre: none
+ * Post: Initializes map from config file
+ */
+Map::Map(ResourceManager<sf::Texture>& textures, const std::string& tileInfoPath, 
+std::vector<sf::View>& playerViews):
 textures(textures),
-tiles(textures, tileInfoPath) {
+tiles(textures, tileInfoPath),
+playerViews(playerViews) {
     // Empty, only initializes tiles
     // Add map layers with addLayer(path)
 }
@@ -125,13 +133,17 @@ void Map::loadEntity() {
 
     const std::string ENTITY_PLAYER = "PLAYER";
     if (ID == ENTITY_PLAYER) {
-        Player* newPlayer = new Player(textures, sf::Vector2f(1920, 1080));
+        // Creates new player view
+        const sf::FloatRect DEFAULT_VIEW_SIZE(0, 0, 1920, 1080);
+        playerViews.emplace_back(sf::View(DEFAULT_VIEW_SIZE));
+
+        // Initalizes new player
+        Player* newPlayer = new Player(textures, playerViews.back());
         
         int spriteDistance = spriteSize.x * spriteScale.y;
         newPlayer->setPosition(sf::Vector2f(posX * spriteDistance, posY * spriteDistance));
         newPlayer->setScale(spriteScale);
         newPlayer->setAnimation(animationType);
-        newPlayer->getView();
         
         entityList.add(ID, currentLayer, newPlayer);
     } else { // Has to be a Tile

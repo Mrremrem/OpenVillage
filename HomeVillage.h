@@ -10,6 +10,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <string>
+#include <vector>
 #include "DebugLog.h"
 #include "ResourceManager.h"
 #include "Map.h"
@@ -31,7 +32,7 @@ public:
     // Initializes HomeVillage map
     HomeVillage(ResourceManager<sf::Texture>& textures, 
     ResourceManager<sf::Font>& fonts, 
-    const sf::Vector2f& windowSize);
+    std::vector<sf::View>& playerViews);
 
     void handleInput();
     void update(sf::RenderWindow& window);
@@ -48,6 +49,8 @@ private:
     int BLOCK_SIZE = 5;
     int SPRITE_SIZE = 16;
     const int SPRITE_DISTANCE = BLOCK_SIZE * SPRITE_SIZE;
+
+    std::vector<sf::View>& playerViews;
 
     Map worldMap; // World map
 

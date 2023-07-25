@@ -9,10 +9,10 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 
-Player::Player(ResourceManager<sf::Texture>& textures, sf::Vector2f viewSize):
+Player::Player(ResourceManager<sf::Texture>& textures, sf::View& view):
 Entity(EntityType::Player, EntityState::Idle),
 spriteSheet(textures, PLAYER_SHEET_DIR),
-viewSize(viewSize),
+view(view),
 hitBox(spriteSheet.getSprite(), false) {
     
     const int DEFAULT_SPEED = 5;
@@ -56,7 +56,6 @@ void Player::update() {
 
     // Updates player view
     view.setCenter(spriteSheet.getSprite().getPosition());
-    view.setSize(viewSize);
 
     // Updates hitbox
     hitBox.update();

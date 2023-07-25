@@ -22,7 +22,7 @@
 class Player : public Entity {
 public:
     // Initializes player sprite
-    Player(ResourceManager<sf::Texture>& textures, sf::Vector2f cameraSize); 
+    Player(ResourceManager<sf::Texture>& textures, sf::View& view); 
 
     void handleInput(); // Handles movement direction input
     void update(); // Updates collision box
@@ -64,8 +64,7 @@ private:
     Direction prevDirection;
     
 
-    sf::View view;
-    sf::Vector2f viewSize;
+    sf::View& view;
     float viewSpeed = 3;
 
     int spriteDistance;
