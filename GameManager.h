@@ -54,6 +54,7 @@ private:
 
     const int DEFAULT_PLAYER_SPEED = 3;
     const int DEFAULT_PLAYER_SCALE = 5;
+
     //sf::Vector2f CAMERA_SIZE = sf::Vector2f(1920, 1080);
     //DebugLog playerDebug;
 

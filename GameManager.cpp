@@ -3,6 +3,7 @@
 //
 
 #include "GameManager.h"
+#include <SFML/System/Vector2.hpp>
 
 GameManager::GameManager():
 window("Open Village", WINDOW_SIZE),

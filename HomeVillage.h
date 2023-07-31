@@ -56,11 +56,11 @@ private:
 
     //SpriteSheet spriteSheet; // Holds sprite info
 
-    sf::Vector2f windowSize;
-
     //Player redMan;
 
     DebugLog viewDebugLog;
+
+    void updatePlayerViews(sf::RenderWindow& window);
     
     /*TextBox textbox;
 

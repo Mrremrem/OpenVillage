@@ -4,6 +4,8 @@
 
 #include "HomeVillage.h"
 #include "DebugLog.h"
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -29,11 +31,29 @@ void HomeVillage::handleInput() {
 
 void HomeVillage::update(sf::RenderWindow& window) {
     worldMap.update();
+    updatePlayerViews(window);
 }
 
-void HomeVillage::render(sf::RenderWindow &window) {
+void HomeVillage::render(sf::RenderWindow& window) {
     window.setView(window.getDefaultView());
     worldMap.render(window);
+}
+
+/*
+ * Updates player views
+ * Pre: none
+ * Post: Updates each player view's aspect ratio
+ */
+void HomeVillage::updatePlayerViews(sf::RenderWindow& window) {
+    for (sf::View& viewIndex : playerViews) {
+        sf::Vector2f oldCenter(viewIndex.getCenter());
+        sf::Vector2f newSize(window.getSize().x, window.getSize().y);
+        
+        viewIndex.setSize(newSize);
+        viewIndex.setCenter(oldCenter);
+
+        viewIndex.setViewport(sf::FloatRect(0, 0, 1, 1));
+    }
 }
 
 /*
