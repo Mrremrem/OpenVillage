@@ -4,9 +4,10 @@
 
 #include "GameManager.h"
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Window/WindowStyle.hpp>
 
 GameManager::GameManager():
-window("Open Village", WINDOW_SIZE),
+window("Open Village", WINDOW_SIZE, sf::Style::Titlebar | sf::Style::Close),
 textures(TEXTURE_CONFIG_DIR),
 fonts(FONT_CONFIG_DIR),
 homeVillage(textures, fonts, playerViews) {

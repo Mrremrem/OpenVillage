@@ -3,6 +3,8 @@
 //
 
 #include "WindowManager.h"
+#include "Tile.h"
+#include <SFML/Config.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
@@ -10,12 +12,18 @@
 
 // Creates a default 640x480 window
 WindowManager::WindowManager() {
-    setup("Untitled window", sf::Vector2u(640, 480));
+    setup("Untitled window", sf::Vector2u(640, 480), sf::Style::Default);
 }
 
 // Creates window with default style
 WindowManager::WindowManager(const std::string& title, const sf::Vector2u& size) {
-    setup(title, size);
+    setup(title, size, sf::Style::Default);
+}
+
+// Creates window with provided style
+WindowManager::WindowManager(const std::string& title, const sf::Vector2u& size,
+ sf::Uint32 style) {
+    setup(title, size, style);
 }
 
 // Closes window
@@ -39,11 +47,14 @@ void WindowManager::endDraw() {
 }
 
 // Sets instances and creates window
-void WindowManager::setup(const std::string title, const sf::Vector2u size) {
+void WindowManager::setup(const std::string title, const sf::Vector2u size, sf::Uint32 style) {
     windowTitle = title;
     windowSize = size;
+    windowStyle = style;
+
     isWindowFullscreen = false;
     isWindowTerminated = false;
+
     create();
 }
 
@@ -87,11 +98,10 @@ sf::RenderWindow* WindowManager::getRenderWindow() {
 
 // Creates window
 void WindowManager::create() {
-    auto style = (isWindowFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
-    window.create(sf::VideoMode::getDesktopMode(), windowTitle, style);
+    window.create(sf::VideoMode::getDesktopMode(), windowTitle, windowStyle);
 
     const int BITS_PER_PIXEL = 32;
-    window.create({ windowSize.x, windowSize.y, BITS_PER_PIXEL}, windowTitle, style);
+    window.create({ windowSize.x, windowSize.y, BITS_PER_PIXEL}, windowTitle, windowStyle);
 }
 
 // Closes window
