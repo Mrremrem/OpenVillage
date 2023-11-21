@@ -3,6 +3,7 @@
 //
 
 #include "Tile.h"
+#include "CollisionBox.h"
 #include <SFML/System/Vector2.hpp>
 
 // Constructor for struct Tile 
@@ -60,7 +61,7 @@ const bool Tile::isDeadly() {
     return isConsideredDeadly;
 }
 
-const bool Tile::isColliding(Entity& other) {
+const bool Tile::isColliding(CollisionBox& other) {
     return false;
 }
 

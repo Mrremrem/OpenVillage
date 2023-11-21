@@ -29,8 +29,8 @@
 class Map {
 public:
     // Forms map from path and stores tile info
-    Map(ResourceManager<sf::Texture>& textures, const std::string& tileInfoPath, 
-    std::vector<sf::View>& playerViews);
+    Map(ResourceManager<sf::Texture>& textures, ResourceManager<sf::Font>& fonts, 
+        const std::string& tileInfoPath, std::vector<sf::View>& playerViewsList);
     ~Map();
 
     void update();// Updates entities
@@ -56,10 +56,11 @@ private:
     bool outOfBounds(int posX, int posY);
 
     ResourceManager<sf::Texture>& textures;
+    ResourceManager<sf::Font>& fonts;
     TileManager tiles;
 
     EntityManager entityList;
-    std::vector<sf::View>& playerViews;
+    std::vector<sf::View>& playerViewsList;
     
     std::ifstream mapFile;
 };

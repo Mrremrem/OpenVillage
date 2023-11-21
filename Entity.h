@@ -50,7 +50,7 @@ public:
 
     virtual void setPosition(sf::Vector2f position) = 0; // Sets entity's position
 
-    virtual const bool isColliding(Entity& other) = 0; // Tests if entity is colliding with other
+    virtual const bool isColliding(CollisionBox& other) = 0; // Tests if entity is colliding with other
 
     virtual const std::string getID() = 0; // Gets unique ID
 

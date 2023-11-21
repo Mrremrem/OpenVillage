@@ -6,6 +6,7 @@
 #ifndef OPENVILLAGE_TILE_H
 #define OPENVILLAGE_TILE_H
 
+#include "CollisionBox.h"
 #include "ResourceManager.h"
 #include "Entity.h"
 #include "SpriteSheet.h"
@@ -36,7 +37,7 @@ public:
     const sf::Vector2f getFriction(); // Gets friction
     const bool isDeadly(); // Tests if tile is deadly
 
-    const bool isColliding(Entity& other); // Tests if tile collides with other entity
+    const bool isColliding(CollisionBox& other); // Tests if tile collides with other entity
     //const int getLayerNum(); // Gets layer number
 
     // For sorting comparisions:

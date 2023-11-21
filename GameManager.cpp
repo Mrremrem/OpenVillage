@@ -10,7 +10,8 @@ GameManager::GameManager():
 window("Open Village", WINDOW_SIZE, sf::Style::Titlebar | sf::Style::Close),
 textures(TEXTURE_CONFIG_DIR),
 fonts(FONT_CONFIG_DIR),
-homeVillage(textures, fonts, playerViews) {
+playerViewsList(),
+homeVillage(textures, fonts, playerViewsList) {
     elapsedTime = clock.restart();
 
     // Initializes player stats

@@ -111,7 +111,8 @@ void SpriteSheet::loadSheet(const std::string& path) {
     std::ifstream spriteFile(path);
 
     if (!spriteFile.good()) {
-        throw std::invalid_argument("SpriteSheet.cpp:loadSheet: Unable to open sprite config. Bad file");
+        throw std::invalid_argument("SpriteSheet.cpp:loadSheet: Unable to open sprite config. "
+            "Bad file. Path provided: " + path);
     }
 
     //std::cout << "SpriteSheet.cpp:loadSheet: SpriteSheet loadSheet runs! " << std::endl;

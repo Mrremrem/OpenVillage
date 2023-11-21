@@ -13,7 +13,7 @@ Player::Player(ResourceManager<sf::Texture>& textures, sf::View& view):
 Entity(EntityType::Player, EntityState::Idle),
 spriteSheet(textures, PLAYER_SHEET_DIR),
 view(view),
-hitBox(spriteSheet.getSprite(), false) {
+hitBox(spriteSheet.getSprite(), true) {
     
     const int DEFAULT_SPEED = 5;
     speed = sf::Vector2f(DEFAULT_SPEED, DEFAULT_SPEED);
@@ -67,7 +67,6 @@ void Player::update() {
  * Post: renders player to window
  */
 void Player::render(sf::RenderWindow& window) {
-    window.setView(view);
     spriteSheet.render(window);
     hitBox.render(window);
 }
@@ -89,14 +88,14 @@ void Player::setDirection(Direction direction) {
 /*
  * Sets player's position
  * Pre: none
- * Post: Sets player's position to position
+ * Post: spriteSheet.getSprite().getPosition() == position
  */
 void Player::setPosition(sf::Vector2f position) {
     spriteSheet.getSprite().setPosition(position);
 }
 
 /*
- * Sets player's scale
+ * Sets player's sprite scale
  * Pre: none
  * Post: Sets player's scale to scale
  */
@@ -123,7 +122,7 @@ sf::Vector2f Player::getPosition() {
 }
 
 /*
- * Sets player animation
+ * Sets player's sprite animation
  * Pre: none
  * Post: none
  */
@@ -132,9 +131,18 @@ void Player::setAnimation(const std::string& animation) {
 }
 
 /*
+ * Sets player view
+ * Pre: none
+ * Post: this->view = view
+ */
+void Player::setView(sf::View view) {
+    this->view = view;
+}
+
+/*
  * Sets player view size
  * Pre: none
- * Post: view.getSize() = size
+ * Post: view.getSize() == size
  */
 void Player::setViewSize(sf::Vector2f size) {
     view.setSize(size);
@@ -180,8 +188,8 @@ SpriteSheet& Player::getSpriteSheet() {
  * Pre: none
  * Post: returns true if player collides with other
  */
-const bool Player::isColliding(Entity& other) {
-    return false;
+const bool Player::isColliding(CollisionBox& otherBox) {
+    return hitBox.isColliding(otherBox);
 }
 
 /*

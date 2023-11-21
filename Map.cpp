@@ -14,11 +14,12 @@
  * Pre: none
  * Post: Initializes map from config file
  */
-Map::Map(ResourceManager<sf::Texture>& textures, const std::string& tileInfoPath, 
-std::vector<sf::View>& playerViews):
+Map::Map(ResourceManager<sf::Texture>& textures, ResourceManager<sf::Font>& fonts, 
+    const std::string& tileInfoPath, std::vector<sf::View>& playerViewsList):
 textures(textures),
+fonts(fonts),
 tiles(textures, tileInfoPath),
-playerViews(playerViews) {
+playerViewsList(playerViewsList) {
     // Empty, only initializes tiles
     // Add map layers with addLayer(path)
 }
@@ -52,6 +53,8 @@ void Map::update() {
  */
 void Map::render(sf::RenderWindow& window) {
     std::cout << "Rendering map..." << std::endl;
+
+    window.setView(playerViewsList.at(0));
     
     std::cout << "Begin of render... \n" << std::endl;
     for (auto entityIndex : entityList) {
@@ -132,13 +135,14 @@ void Map::loadEntity() {
     mapFile >> animationType;
 
     const std::string ENTITY_PLAYER = "PLAYER";
+    const std::string ENTITY_SIGN = "SIGN";
     if (ID == ENTITY_PLAYER) {
         // Creates new player view
         const sf::FloatRect DEFAULT_VIEW_SIZE(0, 0, 1920, 1080);
-        playerViews.emplace_back(sf::View(DEFAULT_VIEW_SIZE));
+        playerViewsList.emplace_back(sf::View(DEFAULT_VIEW_SIZE));
 
         // Initalizes new player
-        Player* newPlayer = new Player(textures, playerViews.back());
+        Player* newPlayer = new Player(textures, playerViewsList.back());
         
         int spriteDistance = spriteSize.x * spriteScale.y;
         newPlayer->setPosition(sf::Vector2f(posX * spriteDistance, posY * spriteDistance));
@@ -146,6 +150,15 @@ void Map::loadEntity() {
         newPlayer->setAnimation(animationType);
         
         entityList.add(ID, currentLayer, newPlayer);
+    } else if (ID == ENTITY_SIGN) {
+        Sign* newSign = new Sign(textures, fonts);
+
+        int spriteDistance = spriteSize.x * spriteScale.y;
+        newSign->setPosition(sf::Vector2f(posX * spriteDistance, posY * spriteDistance));
+        newSign->setScale(spriteScale);
+        newSign->setAnimation(animationType);
+
+        entityList.add(ID, currentLayer, newSign);
     } else { // Has to be a Tile
         Tile* newTile = new Tile(tiles.getTile(ID));
         

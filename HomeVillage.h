@@ -32,7 +32,7 @@ public:
     // Initializes HomeVillage map
     HomeVillage(ResourceManager<sf::Texture>& textures, 
     ResourceManager<sf::Font>& fonts, 
-    std::vector<sf::View>& playerViews);
+    std::vector<sf::View>& playerViewsList);
 
     void handleInput();
     void update(sf::RenderWindow& window);
@@ -50,7 +50,7 @@ private:
     int SPRITE_SIZE = 16;
     const int SPRITE_DISTANCE = BLOCK_SIZE * SPRITE_SIZE;
 
-    std::vector<sf::View>& playerViews;
+    std::vector<sf::View>& playerViewsList;
 
     Map worldMap; // World map
 

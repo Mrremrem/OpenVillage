@@ -48,7 +48,7 @@ private:
     sf::Time elapsedTime;
     const int MAX_FPS = 60;
 
-    std::vector<sf::View> playerViews;
+    std::vector<sf::View> playerViewsList;
 
     HomeVillage homeVillage;
 

@@ -11,10 +11,10 @@
 #include <SFML/System/Vector2.hpp>
 HomeVillage::HomeVillage(ResourceManager<sf::Texture>& textures, 
 ResourceManager<sf::Font>& fonts, 
-std::vector<sf::View>& playerViews):
-    worldMap(textures, TILE_CONFIG_DIR, playerViews),
+std::vector<sf::View>& playerViewsList):
+    worldMap(textures, fonts, TILE_CONFIG_DIR, playerViewsList),
     viewDebugLog(fonts),
-    playerViews(playerViews) {
+    playerViewsList(playerViewsList) {
 
     //worldMap.addLayer(WORLD_MAP_DIR);
     worldMap.initializeMap(WORLD_MAP_DIR);
@@ -45,7 +45,7 @@ void HomeVillage::render(sf::RenderWindow& window) {
  * Post: Updates each player view's aspect ratio
  */
 void HomeVillage::updatePlayerViews(sf::RenderWindow& window) {
-    for (sf::View& viewIndex : playerViews) {
+    for (sf::View& viewIndex : playerViewsList) {
         sf::Vector2f oldCenter(viewIndex.getCenter());
         sf::Vector2f newSize(window.getSize().x, window.getSize().y);
         

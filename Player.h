@@ -34,6 +34,7 @@ public:
     void setScale(sf::Vector2f scale); // Sets player scale
     void setSpeed(sf::Vector2f speed); // Sets player speed
     void setAnimation(const std::string& animation); // Sets sprite animation
+    void setView(sf::View view); // Sets player's view
     void setViewSize(sf::Vector2f size); // Sets player view size
     //void setLayerNum(int layerNum); // Sets player's layer
 
@@ -42,7 +43,7 @@ public:
     sf::View& getView(); // Gets view
     SpriteSheet& getSpriteSheet(); // Gets SpriteSheet container
 
-    const bool isColliding(Entity& other); // Tests if player collides with other entity
+    const bool isColliding(CollisionBox& otherBox); // Tests if player collides with other entity
     const std::string getID(); // Gets entity ID
     //const int getLayerNum(); // Gets layer player is in
 
