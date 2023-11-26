@@ -21,10 +21,18 @@
  * manually type check when casting.
  */
 enum class EntityType {
-    Base,
     Tile,
     Player,
     Sign
+};
+
+/*
+ * Entity types as chars
+ */
+const std::string ENTITY_TYPE_STR[] = {
+    "Tile",
+    "Player",
+    "Sign",
 };
 
 /*

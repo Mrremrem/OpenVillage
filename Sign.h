@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
+#include "EventManager.h"
 #include "Entity.h"
 #include "ResourceManager.h"
 #include "CollisionBox.h"
@@ -27,6 +28,11 @@ public:
 
     // Tests if sign is colliding with other entity
     const bool isColliding(CollisionBox& otherBox); 
+
+    CollisionBox& getCollisionBox(); // Gets Sign's hitBox
+
+    void toggleTextbox(); // Toggles textbox
+    void setTextBoxVisiblility(bool isVisible);
 
     const std::string getID(); // Gets unique ID
 

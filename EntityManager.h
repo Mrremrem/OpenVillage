@@ -1,5 +1,5 @@
 //
-// Created by mrremrem on 12/19/22.
+// Created by mrremrem on 11/22/23.
 //
 
 #ifndef OPENVILLAGE_ENTITYMANAGER_H
@@ -8,6 +8,7 @@
 #include <string>
 #include <map>
 #include <unordered_map>
+#include <vector>
 #include "Entity.h"
 
 /*
@@ -19,8 +20,6 @@ public:
     EntityKey(std::string ID, int layerNum):
     ID(ID),
     layerNum(layerNum) {}
-
-    void setType(const std::string& entityType);
 
     const std::string& getID() const { return ID; }
     const int getLayerNum() const { return layerNum; }
@@ -66,6 +65,8 @@ public:
     // Gets # of entities created with entityType in EntityManager's lifetime
     int getLifetimeTypeCount(EntityType type);
 
+    std::vector<Entity*> getEntityTypeList(EntityType type); // Gets list of single EntityTypes
+
     // For iterations
     std::map<EntityKey, Entity*>::iterator begin();
     std::map<EntityKey, Entity*>::iterator end();
@@ -83,6 +84,9 @@ private:
     std::unordered_map<EntityType, int> lifetimeTypeCountList; // Holds # of types during lifetime
 
     std::unordered_map<std::string, int> layerNumList; // Holds each entity's layerNum
+
+    // Stores types as strings 
+    static const std::unordered_map<EntityType, std::string> TYPE_TO_STRING;
 };
 
 #endif //OPENVILLAGE_ENTITYMANAGER_H

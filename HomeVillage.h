@@ -13,6 +13,7 @@
 #include <vector>
 #include "DebugLog.h"
 #include "ResourceManager.h"
+#include "EventManager.h"
 #include "Map.h"
 #include "TileManager.h"
 #include "Player.h"
@@ -31,8 +32,8 @@ class HomeVillage {
 public:
     // Initializes HomeVillage map
     HomeVillage(ResourceManager<sf::Texture>& textures, 
-    ResourceManager<sf::Font>& fonts, 
-    std::vector<sf::View>& playerViewsList);
+        ResourceManager<sf::Font>& fonts, 
+        std::vector<sf::View>& playerViewsList);
 
     void handleInput();
     void update(sf::RenderWindow& window);
@@ -60,7 +61,9 @@ private:
 
     DebugLog viewDebugLog;
 
-    void updatePlayerViews(sf::RenderWindow& window);
+    void updatePlayerViews(sf::RenderWindow& window); // Updates all player views
+
+    void updatePlayerCollisions(); // Updates collisions from signs
     
     /*TextBox textbox;
 

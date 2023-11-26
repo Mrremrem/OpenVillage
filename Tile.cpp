@@ -8,7 +8,7 @@
 
 // Constructor for struct Tile 
 Tile::Tile(ResourceManager<sf::Texture>& textures, const std::string& path):
-Entity(EntityType::Base, EntityState::Idle),
+Entity(EntityType::Tile, EntityState::Idle),
 spriteSheet(textures, path) {
     // Empty
 }

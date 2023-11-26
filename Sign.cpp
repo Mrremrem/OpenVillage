@@ -1,4 +1,5 @@
 #include "Sign.h"
+#include "CollisionBox.h"
 #include "Entity.h"
 #include "ResourceManager.h"
 #include "SpriteSheet.h"
@@ -6,11 +7,13 @@
 #include <SFML/System/Vector2.hpp>
 
 Sign::Sign(ResourceManager<sf::Texture>& textures, ResourceManager<sf::Font>& fonts):
-Entity(EntityType::Base, EntityState::Idle),
+Entity(EntityType::Sign, EntityState::Idle),
 spriteSheet(textures, SIGN_SHEET_DIR),
 hitBox(spriteSheet.getSprite(), true),
 textbox(fonts) {
-    // Empty
+    textbox.setVisibility(false);
+
+    EventManager::getInstance().subscribe("DisplayTextBox", std::bind(&Sign::toggleTextbox, this));
 }
 
 void Sign::update() {
@@ -23,6 +26,9 @@ void Sign::update() {
 void Sign::render(sf::RenderWindow &window) {
     window.draw(spriteSheet.getSprite());
     hitBox.render(window);
+
+    // Renders sign's textbox
+    textbox.render(window);
 }
 
 /*
@@ -52,13 +58,41 @@ void Sign::setPosition(sf::Vector2f position) {
     spriteSheet.getSprite().setPosition(position);
 }
 
-// Tests if sign is colliding with other entity
 /*
  * Tests whether sign is colliding with an entity
  * Pre: none
- * Post: Returns true if sign is touching another entity*/
+ * Post: Returns true if sign is touching another entity
+ */
 const bool Sign::isColliding(CollisionBox& otherBox) {
     return hitBox.isColliding(otherBox);
+}
+
+/*
+ * Returns sign's collision box
+ * Pre: none
+ * Post: Returns hitBox
+ */
+CollisionBox& Sign::getCollisionBox() {
+    return hitBox;
+}
+
+/*
+ * Toggles textbox upon toggle event
+ * Pre: none
+ * Post: Toggles textbox if player collides with 
+ * this sign and activates event
+ */
+void Sign::toggleTextbox() {
+    textbox.toggleVisibility();
+}
+
+/*
+ * Sets textbox visibility
+ * Pre: none
+ * Post: Enables or disables textbox
+ */
+void Sign::setTextBoxVisiblility(bool isVisible) {
+    textbox.setVisibility(isVisible);
 }
 
 /*

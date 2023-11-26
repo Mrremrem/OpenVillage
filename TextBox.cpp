@@ -23,6 +23,26 @@ TextBox::~TextBox() {
     // Empty
 }
 
+void TextBox::update() {
+    // Checks if textbox is visible
+    if (!isVisible){
+        return;
+    }
+
+    updateBackdrop();
+    updateText();
+}
+
+void TextBox::render(sf::RenderWindow& window) {
+    // Checks if textbox is visible
+    if (!isVisible){
+        return;
+    }
+
+    window.draw(backdrop);
+    window.draw(content);
+}
+
 // Remind me why this was needed . _.
 /*
  * So this is what I'm gonna organize
@@ -186,16 +206,6 @@ sf::Vector2f TextBox::getSize() {
     return size;
 }
 
-void TextBox::update() {
-    // Checks if textbox is visible
-    if (!isVisible){
-        return;
-    }
-
-    updateBackdrop();
-    updateText();
-}
-
 void TextBox::updateBackdrop() {
     // Sets backdrop
     backdrop.setFillColor(backdropColor);
@@ -223,14 +233,4 @@ void TextBox::updateText() {
         // Sets text to be displayed
         content.setString(text.substr(0, numOfTextDisplayed));
     }
-}
-
-void TextBox::render(sf::RenderWindow& window) {
-    // Checks if textbox is visible
-    if (!isVisible){
-        return;
-    }
-
-    window.draw(backdrop);
-    window.draw(content);
 }

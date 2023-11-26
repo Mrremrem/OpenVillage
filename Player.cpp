@@ -8,6 +8,7 @@
 #include "SpriteSheet.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <functional>
 
 Player::Player(ResourceManager<sf::Texture>& textures, sf::View& view):
 Entity(EntityType::Player, EntityState::Idle),
@@ -17,6 +18,9 @@ hitBox(spriteSheet.getSprite(), true) {
     
     const int DEFAULT_SPEED = 5;
     speed = sf::Vector2f(DEFAULT_SPEED, DEFAULT_SPEED);
+
+    // Initializes Events
+    EventManager::getInstance().subscribe("PlayerCollision", std::bind(&Player::handleObjectCollision, this));
 }
 
 /*
@@ -181,6 +185,15 @@ sf::View& Player::getView() {
  */
 SpriteSheet& Player::getSpriteSheet() {
     return spriteSheet;
+}
+
+/*
+ * Handles normal object collision
+ * Pre: none
+ * Post: Sets direction to none
+ */
+void Player::handleObjectCollision() {
+    direction = Direction::None;
 }
 
 /*

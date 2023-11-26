@@ -67,6 +67,9 @@ void CollisionBox::render(sf::RenderWindow& window) {
  * Post: Returns true if this box collides
  * with other box
  */
-bool CollisionBox::isColliding(CollisionBox& other) {
-    return box.getTextureRect().intersects(other.box.getTextureRect());
+bool CollisionBox::isColliding(const CollisionBox& other) {
+    sf::FloatRect thisBounds = box.getGlobalBounds();
+    sf::FloatRect otherBounds = other.box.getGlobalBounds();
+    
+    return thisBounds.intersects(otherBounds);
 }

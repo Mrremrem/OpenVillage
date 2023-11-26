@@ -37,6 +37,8 @@ public:
     void render(sf::RenderWindow& window); // Renders map to window
 
     void initializeMap(const std::string& mapPath); // Initializes map from path
+
+    EntityManager& getEntityList();
 private:
     sf::Vector2f worldSize;
     sf::Vector2f spriteSize;

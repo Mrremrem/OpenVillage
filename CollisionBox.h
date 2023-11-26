@@ -31,7 +31,7 @@ public:
     void render(sf::RenderWindow& window);
 
 
-    bool isColliding(CollisionBox& otherBox);
+    bool isColliding(const CollisionBox& otherBox);
     void setPosition(sf::Vector2f pos);
 private:
     sf::RectangleShape box;

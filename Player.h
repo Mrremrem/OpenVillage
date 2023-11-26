@@ -10,6 +10,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include "Directions.h"
+#include "EventManager.h"
 #include "CollisionBox.h"
 #include "Entity.h"
 #include "SpriteSheet.h"
@@ -42,6 +43,8 @@ public:
     Direction getDirection(); // Gets player direction
     sf::View& getView(); // Gets view
     SpriteSheet& getSpriteSheet(); // Gets SpriteSheet container
+
+    void handleObjectCollision(); // Handles collision by stopping collision
 
     const bool isColliding(CollisionBox& otherBox); // Tests if player collides with other entity
     const std::string getID(); // Gets entity ID

@@ -1,6 +1,9 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include <stdexcept>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 EntityManager::EntityManager() {
     // Empty for now
@@ -82,8 +85,7 @@ Entity* EntityManager::get(const std::string& entityID) {
 /*
  * Sets entity's layer
  * Pre: none
- * Post: Returns true if layer has been
- * changed
+ * Post: Returns true if layer has been changed
  */
 bool EntityManager::setLayer(const std::string& entityID, int layerNum) {
     auto layerNumListIt = layerNumList.find(entityID);
@@ -113,6 +115,8 @@ bool EntityManager::setLayer(const std::string& entityID, int layerNum) {
     layerNumListIt->second = layerNum;
     EntityKey copyEntityKey(entityID, layerNum);
     entityList.emplace(copyEntityKey, entityCopy);
+
+    return true;
 }
 
 /*
@@ -149,7 +153,7 @@ int EntityManager::getTotalTypeCount(EntityType type) {
     auto typeCountIt = typeCountList.find(type);
 
     // Has to be zero if type isn't present
-    return (typeCountIt == lifetimeTypeCountList.end()) ? 0 : typeCountIt->second;
+    return (typeCountIt == typeCountList.end()) ? 0 : typeCountIt->second;
 }
 
 /*
@@ -165,6 +169,32 @@ int EntityManager::getLifetimeTypeCount(EntityType type) {
 
     // Has to be zero if type isn't present
     return (typeCountIt == lifetimeTypeCountList.end()) ? 0 : typeCountIt->second;
+}
+
+/*
+ * Gets list of single EntityTypes
+ * Pre: entityList.size() > 0
+ * Post: Returns list of every entity that has
+ * EntityType of type (as in, returns a list of all
+ * players if type passed is EntityType::Player)
+ * Returns empty list if no type was added
+ */
+ #include <iostream>
+std::vector<Entity*> EntityManager::getEntityTypeList(EntityType type) {
+    std::vector<Entity*> entityTypeList;
+    int totalTypes = getTotalTypeCount(type);
+
+    std::cout << "totalTypes: " << totalTypes << std::endl;
+
+    for (int typeIndex = 0; typeIndex < totalTypes; typeIndex++) {
+        int typeVal = static_cast<int>(type);
+        std::string entityID = ENTITY_TYPE_STR[typeVal] +  std::to_string(typeIndex);
+
+        std::cout << "Getting type " << ENTITY_TYPE_STR[typeVal] << " with " << entityID << std::endl;
+        entityTypeList.emplace_back(get(entityID));
+    }
+
+    return entityTypeList;
 }
 
 /*
@@ -224,4 +254,5 @@ bool EntityManager::decrementTypeCounter(EntityType type) {
     }
 
     typeCounterIt->second = typeCounterIt->second - 1;
+    return true;
 }

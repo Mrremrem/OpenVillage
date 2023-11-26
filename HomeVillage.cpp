@@ -4,11 +4,14 @@
 
 #include "HomeVillage.h"
 #include "DebugLog.h"
+#include "Entity.h"
+#include "Player.h"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <vector>
 HomeVillage::HomeVillage(ResourceManager<sf::Texture>& textures, 
 ResourceManager<sf::Font>& fonts, 
 std::vector<sf::View>& playerViewsList):
@@ -21,6 +24,11 @@ std::vector<sf::View>& playerViewsList):
     //worldMap.addLwindow.setView(window.getDefaultView());vayer(ENTITY_MAP_DIR);
 } // QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 
+/*
+ * Returns block size
+ * Pre: none
+ * Post: Returns BLOCK_SIZE
+ */
 int HomeVillage::getBlockSize() {
     return BLOCK_SIZE;
 }
@@ -29,11 +37,23 @@ void HomeVillage::handleInput() {
     //redMan.handleInput();
 }
 
+/*
+ * Updates map, views, and player collisions
+ * Pre: none
+ * Post: calls worldMap's update()
+ */
 void HomeVillage::update(sf::RenderWindow& window) {
     worldMap.update();
     updatePlayerViews(window);
+
+    updatePlayerCollisions();
 }
 
+/*
+ * Sets view and renders map
+ * Pre: none
+ * Post: calls worldMap's render()
+ */
 void HomeVillage::render(sf::RenderWindow& window) {
     window.setView(window.getDefaultView());
     worldMap.render(window);
@@ -56,6 +76,37 @@ void HomeVillage::updatePlayerViews(sf::RenderWindow& window) {
     }
 }
 
+/*
+ * Updates player collisions with other entities
+ * Pre: none
+ * Post: Updates entities if there's player collision
+ */
+void HomeVillage::updatePlayerCollisions() {
+    std::vector<Entity*> playerList = 
+        worldMap.getEntityList().getEntityTypeList(EntityType::Player);
+    std::vector<Entity*> signList = 
+        worldMap.getEntityList().getEntityTypeList(EntityType::Sign);
+
+    int i = 0;
+    std::cout << "playerList.size(): " << playerList.size() << " signList.size(): " << signList.size() << std::endl;
+    for (Entity* playerIndex : playerList) {
+        Player* currentPlayer = static_cast<Player*>(playerIndex);
+        std::cout << "Loop running for player" << i << std::endl; i++;
+        for (Entity* signIndex : signList) {
+            Sign* currentSign = static_cast<Sign*>(signIndex);
+            if (currentPlayer->isColliding(currentSign->getCollisionBox())) {
+                EventManager::getInstance().publish("PlayerCollision");
+                EventManager::getInstance().publish("SignCollision");
+                std::cout << "Hey there's collision!\n" << std::endl;
+            }
+        }
+
+        // Add more entities below
+    }
+}
+
+// Yeah, I don't really need this anymore, but I'll get rid of it later
+// (I still want to use the dialogue for future testing :P)
 /*
 void HomeVillage::setupTextbox() {
     //textbox.addText("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"

@@ -31,18 +31,12 @@ public:
     void setFriction(const sf::Vector2f friction); // Sets friction on both axis
     void setDeadliness(bool isDeadly); // Sets deadlyness
     void setAnimation(const std::string& animation); // Sets animation
-    //void setLayerNum(int layerNum); // Sets tile layer
 
     const std::string getID(); // Gets ID
     const sf::Vector2f getFriction(); // Gets friction
     const bool isDeadly(); // Tests if tile is deadly
 
     const bool isColliding(CollisionBox& other); // Tests if tile collides with other entity
-    //const int getLayerNum(); // Gets layer number
-
-    // For sorting comparisions:
-    /*bool operator<(Entity& other);
-    bool operator==(Entity& other);*/
 private:
     
     std::string ID;

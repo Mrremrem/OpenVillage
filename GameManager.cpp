@@ -54,6 +54,11 @@ void GameManager::update() {
     }
 }
 
+/*
+ * Begins rendering everything
+ * Pre: none
+ * Post: Renders homeVillage to window
+ */
 void GameManager::render() {
     window.beginDraw();
 

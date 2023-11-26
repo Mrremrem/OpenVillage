@@ -68,6 +68,12 @@ void Map::render(sf::RenderWindow& window) {
     " View Y: " << redMan->getView().getCenter().y << std::endl; */
 }
 
+/*
+ * Helper method for loadMapData() initialize map
+ * Pre: none
+ * Post: tests if mapPath is a valid path,
+ * throws error if path is an invalid map path
+ */
 void Map::initializeMap(const std::string& mapPath) {
     mapFile.open(mapPath);
     if (mapFile.bad() || !mapFile.good()) {
@@ -188,6 +194,15 @@ void Map::initEntityPos(Entity& entity, int posX, int posY) {
     // Sets tile sprite based on ID
     int spriteDistance = spriteSize.x * spriteScale.y;
     entity.setPosition(sf::Vector2f(posX * spriteDistance, posY * spriteDistance));
+}
+
+/*
+ * Returns entityList
+ * Pre: none
+ * Post: Returns all entities from entityList
+ */
+EntityManager& Map::getEntityList() {
+    return entityList;
 }
 
 /*
